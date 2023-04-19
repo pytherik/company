@@ -12,23 +12,26 @@
 <body>
 <div class="wrapper">
   <h1>Mitarbeiter <?= $activity ?></h1>
-  <a href="index.php">
+  <a href="index.php?action=showList">
     <button class="btn">Abbruch</button>
   </a>
-  <form action="" method="post">
+  <form action="index.php" method="post">
     <div class="table">
       <div class="row green">
-<!--        <div class="cell">ID</div>-->
+        <!--        <div class="cell">ID</div>-->
         <div class="cell">Vorname</div>
         <div class="cell">Nachname</div>
         <div class="cell">Abteilung ID</div>
-        <div class="cell">Speichern</div>
+        <div class="cell">Save&nbsp;&nbsp; Reset</div>
       </div>
       <div class="row">
-<!--        <div class="cell">-->
-          <input type="hidden" name="id"
-                 value="<?php if (isset($employee)) echo $employee->getId() ?>">
-<!--        </div>-->
+
+        <!--  hidden fields zur stillen übergabe der jeweiligen Parameter -->
+        <input type="hidden" name="action"
+               value="<?php echo (isset($employee)) ? 'update' : 'create' ?>">
+        <input type="hidden" name="id"
+               value="<?php if (isset($employee)) echo $employee->getId() ?>">
+
         <div class="cell">
           <input type="text" name="firstName"
                  value="<?php if (isset($employee)) echo $employee->getFirstname() ?>"
@@ -45,13 +48,15 @@
                  min="1" max="100" autocomplete="off" required>
         </div>
         <div class="cell">
-          <input class="save" type="submit" name="save" value=&#10004;>
+          <input class="save" type="submit" value=&#10004;>
+          <!--          <span>&nbsp;&nbsp;</span>-->
+          <input class="reset" type="reset" value=&olarr;>
         </div>
       </div>
     </div>
-    <div class="warning">
-      <span class="message"></span>
-    </div>
   </form>
+    <div class="warning">
+      <span class="message">warning</span>
+    </div>
 </body>
 </html>

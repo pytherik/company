@@ -24,7 +24,7 @@
         <div class="cell">Ändern</div>
       </div>
       <?php
-      foreach ($emps as $emp) {
+      foreach ($employees as $emp) {
         ?>
         <div class="row">
 <!--          <div class="cell" data-title="id">--><?php //echo $emp->getId() ?><!--</div>-->

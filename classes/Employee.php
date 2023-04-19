@@ -25,28 +25,65 @@ class Employee
   }
 
   /**
-   * @return Employee2[]
+   * @return Employee[]
    */
-  public function getSeedEmployees(): array
+  public function getAllAsObjects(): array
   {
-    return [
-      new Employee(1, 'Schnuffi', 'Schneuz', 1),
-      new Employee(2, 'Bibo', 'Bird', 4),
-      new Employee(3, 'Hansi', 'Pample', 3),
-      new Employee(4, 'Kalli', 'Kanone', 3),
-    ];
+    $handle = fopen(CSV_PATH, 'r');
+    $employees = [];
+    while ($content = fgetcsv($handle)) {
+      $employees[] = new Employee($content[0], $content[1], $content[2], $content[3]);
+    }
+    fclose($handle);
+    return $employees;
   }
 
   public function getEmployeeById(int $id): Employee
   {
     $employee = new Employee();
-    $employees = $this->getSeedEmployees();
-    foreach($employees as $e) {
-      if($id === $e->getId()){
+    $employees = $this->getAllAsObjects();
+    foreach ($employees as $e) {
+      if ($id === $e->getId()) {
         $employee = $e;
       }
     }
     return $employee;
+  }
+
+  public function store():void
+  {
+    $employees = $this->getAllAsObjects();
+    foreach ($employees as $key => $employee) {
+      if ($employee->getId() === $this->getId()) {
+        $employees[$key] = $this;
+        break;
+      }
+    }
+    unlink(CSV_PATH);
+    $handle = fopen(CSV_PATH, 'w', FILE_APPEND);
+    foreach ($employees as $employee) {
+      $empNumArr = array_values((array)$employee);
+      fputcsv($handle, $empNumArr, ',');
+    }
+    fclose($handle);
+  }
+
+  public function delete(int $id): void
+  {
+    $employees = $this->getAllAsObjects();
+    foreach ($employees as $key => $employee) {
+      if ($employee->getId() === $id) {
+        unset($employees[$key]);
+//        break;
+      }
+    }
+    unlink(CSV_PATH);
+    $handle = fopen(CSV_PATH, 'w', FILE_APPEND);
+    foreach ($employees as $employee) {
+      $empNumArr = array_values((array)$employee);
+      fputcsv($handle, $empNumArr, ',');
+    }
+    fclose($handle);
   }
 
   /**

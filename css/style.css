@@ -24,6 +24,11 @@ input[type="submit"]:hover {
     color:#27ae60;
 }
 
+.reset {
+    margin-left: 2rem;
+    font-weight: bolder;
+    padding: .15rem .32rem;
+}
 .delete {
     color: #ea6153;
 }
