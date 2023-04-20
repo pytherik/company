@@ -25,7 +25,7 @@ input[type="submit"]:hover {
 }
 
 .reset {
-    margin-left: 2rem;
+    /*margin-left: .5rem;*/
     font-weight: bolder;
     padding: .15rem .32rem;
 }

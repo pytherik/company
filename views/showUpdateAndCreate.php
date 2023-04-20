@@ -7,7 +7,7 @@
         initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/style.css">
-  <title>Document</title>
+  <title><?= ucfirst($activity) ?></title>
 </head>
 <body>
 <div class="wrapper">
@@ -22,7 +22,8 @@
         <div class="cell">Vorname</div>
         <div class="cell">Nachname</div>
         <div class="cell">Abteilung ID</div>
-        <div class="cell">Save&nbsp;&nbsp; Reset</div>
+        <div class="cell">save</div>
+        <div class="cell">reset</div>
       </div>
       <div class="row">
 
@@ -49,14 +50,15 @@
         </div>
         <div class="cell">
           <input class="save" type="submit" value=&#10004;>
-          <!--          <span>&nbsp;&nbsp;</span>-->
+        </div>
+        <div>&nbsp;&nbsp;
           <input class="reset" type="reset" value=&olarr;>
         </div>
       </div>
     </div>
   </form>
     <div class="warning">
-      <span class="message">warning</span>
+      <span class="message"></span>
     </div>
 </body>
 </html>
