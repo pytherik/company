@@ -30,8 +30,11 @@
         <!--  hidden fields zur stillen übergabe der jeweiligen Parameter -->
         <input type="hidden" name="action"
                value="<?php echo (isset($employee)) ? 'update' : 'create' ?>">
-        <input type="hidden" name="id"
-               value="<?php if (isset($employee)) echo $employee->getId() ?>">
+        <!--        id Übergabe nur bei update-->
+        <?php if (isset($employee)) { ?>
+          <input type="hidden" name="id"
+                 value="<?= $employee->getId() ?>">
+        <?php } ?>
 
         <div class="cell">
           <input type="text" name="firstName"
@@ -57,8 +60,8 @@
       </div>
     </div>
   </form>
-    <div class="warning">
-      <span class="message"></span>
-    </div>
+  <div class="warning">
+    <span class="message"></span>
+  </div>
 </body>
 </html>

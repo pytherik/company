@@ -1,6 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    /*font-size: 14px;*/
+    font-size: 1.3rem;
     line-height: 20px;
     font-weight: 400;
     color: #dadada;
@@ -41,7 +42,10 @@ input[type="submit"]:hover {
     font-size: 1rem;
     border-radius: .2rem;
 }
-
+.header .cell,
+.green .cell {
+    color: #fff;
+}
 .message {
     background-color: #E8581F99;
     padding: .5rem 0;
