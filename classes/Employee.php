@@ -44,7 +44,7 @@ class Employee
       $employees = [];
       while ($content = fgetcsv($handle)) {
         $employees[] = new Employee($content[0], $content[1], $content[2], $content[3]);
-      }
+      } 
       fclose($handle);
     } catch (Error $e) {
       // wird im view error.php ausgegeben
