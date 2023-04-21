@@ -25,7 +25,8 @@ class Employee
   }
 
   /**
-   * @return Employee[]
+   * @return array
+   * @throws Exception
    */
   public function getAllAsObjects(): array
   {
@@ -47,7 +48,7 @@ class Employee
       fclose($handle);
     } catch (Error $e) {
       // wird im view error.php ausgegeben
-      throw new Exception($e->getMessage().' ' . $e->getTrace().' ' . $e->getCode() . ' ' . $e->getLine());
+      throw new Exception($e->getMessage() . ' '  . implode('-',$e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
     }
     return $employees;
   }
@@ -60,6 +61,7 @@ class Employee
   /**
    * @param int $id
    * @return Employee
+   * @throws Exception
    */
   public function getEmployeeById(int $id): Employee
   {
@@ -78,6 +80,7 @@ class Employee
    * @param string $lastName
    * @param int $departmentId
    * @return Employee
+   * @throws Exception
    */
   public function createNewEmployee(string $firstName, string $lastName, int $departmentId): Employee
   {
@@ -102,9 +105,9 @@ class Employee
 
   /**
    * @return void
+   * @throws Exception
    */
-  public
-  function store(): void
+  public function store(): void
   {
     $employees = $this->getAllAsObjects();
     foreach ($employees as $key => $employee) {
@@ -119,9 +122,9 @@ class Employee
   /**
    * @param int $id
    * @return void
+   * @throws Exception
    */
-  public
-  function delete(int $id): void
+  public function delete(int $id): void
   {
     $employees = $this->getAllAsObjects();
     foreach ($employees as $key => $employee) {
@@ -134,19 +137,23 @@ class Employee
   }
 
   /**
-   * @param array $employees Employee[]
+   * @param array $employees
    * @return void
+   * @throws Exception
    */
-  private
-  function storeInFile(array $employees): void
+  private function storeInFile(array $employees): void
   {
-    unlink(CSV_PATH);
-    $handle = fopen(CSV_PATH, 'w', FILE_APPEND);
-    foreach ($employees as $employee) {
-      $empNumArr = array_values((array)$employee);
-      fputcsv($handle, $empNumArr, ',');
+    try {
+      unlink(CSV_PATH);
+      $handle = fopen(CSV_PATH, 'w', FILE_APPEND);
+      foreach ($employees as $employee) {
+        $empNumArr = array_values((array)$employee);
+        fputcsv($handle, $empNumArr, ',');
+      }
+      fclose($handle);
+    } catch (Error $e) {
+      throw new Exception('Fehler in store in file: ' . $e->getMessage() . ' ' . implode('-', $e->getTrace()));
     }
-    fclose($handle);
   }
 
   /**
