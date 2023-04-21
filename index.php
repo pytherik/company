@@ -12,6 +12,7 @@ include 'classes/Employee.php';
 //             getrennt wahrnehmbaren Dingen oder Teilen
 
 $action = $_REQUEST['action'] ?? 'showList';
+$area = $_REQUEST['area'] ?? 'employee';
 $id = $_REQUEST['id'] ?? '';
 
 // Variablenübergabe
@@ -27,8 +28,10 @@ try {
 
   switch ($action) {
     case 'showList':
-      $employees = (new Employee())->getAllAsObjects();
-      $view = 'showList';
+      if ($area === 'employee') {
+        $employees = (new Employee())->getAllAsObjects();
+        $view = $action;
+      }
       break;
     case 'showUpdate':
       $employee = (new Employee())->getEmployeeById($id);
