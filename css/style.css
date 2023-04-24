@@ -13,15 +13,24 @@ nav {
     justify-content: space-between;
 }
 .btn {
+    cursor: pointer;
     width: 150px;
     padding: .2rem 0;
     margin-bottom: 5px;
-    background-color:#cdcdcd;
+    color: #fff;
 }
 
-/*.create {*/
-/*    background-color: #a0a0a0;*/
-/*}*/
+.ma-list {
+    background-color: #E8581F99;
+}
+
+.dp-list {
+    background-color: #2980b999;
+}
+
+.create {
+    background-color: #27ae6099;
+}
 button:hover,
 input[type="submit"]:hover {
     cursor: pointer;
@@ -50,7 +59,8 @@ input[type="submit"]:hover {
     border-radius: .2rem;
 }
 .header .cell,
-.green .cell {
+.green .cell,
+.blue .cell {
     color: #fff;
 }
 .message {
@@ -109,6 +119,8 @@ input[type="submit"]:hover {
 }
 
 .row.blue {
+    font-weight: 900;
+    color: #fff;
     background: #2980b9;
 }
 
