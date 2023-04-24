@@ -30,36 +30,36 @@ try {
     case 'showList':
       if ($area === 'employee') {
         $employees = (new Employee())->getAllAsObjects();
-        $view = $action;
       }
+      $view = $action;
       break;
     case 'showUpdate':
       if ($area === 'employee') {
         $employee = (new Employee())->getEmployeeById($id);
         $activity = 'bearbeiten';
-        $view = 'showUpdateAndCreate';
       }
+      $view = 'showUpdateAndCreate';
       break;
     case 'showCreate':
       if ($area === 'employee') {
         $activity = 'erstellen';
-        $view = 'showUpdateAndCreate';
       }
+      $view = 'showUpdateAndCreate';
       break;
     case 'delete':
       if ($area === 'employee') {
         (new Employee())->delete($id);
         $employees = (new Employee())->getAllAsObjects();
-        $view = 'showList';
       }
+      $view = 'showList';
       break;
     case 'update':
       if ($area === 'employee') {
         $employee = new Employee($id, $firstName, $lasstName, $departmentId);
         $employee->store();
         $employees = (new Employee())->getAllAsObjects();
-        $view = 'showList';
       }
+      $view = 'showList';
       break;
     case 'create':
       if ($area === 'employee') {
