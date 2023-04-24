@@ -7,11 +7,11 @@
         initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/style.css">
-  <title>Mitarbeiter Liste</title>
+  <title>Alle Mitarbeiter</title>
 </head>
 <body>
 <div class="wrapper">
-  <h1>Mitarbeiter Liste</h1>
+  <h1>Alle Mitarbeiter</h1>
   <?php include 'views/navigation.php' ?>
   <div class="table">
     <div class="row header">

@@ -1,7 +1,6 @@
 <?php
-// erstes Ziel: list.php anzeigen lassen
 include 'config.php';
-include 'classes/ConnectDB.php';
+#include 'classes/ConnectDB.php';
 include 'classes/Employee.php';
 include 'classes/Department.php';
 //echo "<pre>";
@@ -18,7 +17,7 @@ $area = $_REQUEST['area'] ?? 'employee';
 $id = $_REQUEST['id'] ?? '';
 
 // Variablenübergabe
-$departmentName = $_POST['departmentName'];
+$departmentName = $_POST['departmentName'] ?? '';
 $firstName = $_POST['firstName'] ?? '';
 $lasstName = $_POST['lastName'] ?? '';
 $departmentId = $_POST['departmentId'] ?? '';

@@ -11,13 +11,15 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1>Mitarbeiter <?= $activity ?></h1>
+  <h1>Abteilung <?= $activity ?></h1>
   <?php include 'views/navigation.php' ?>
   <form action="index.php" method="post">
     <div class="table">
       <div class="row green">
         <!--        <div class="cell">ID</div>-->
         <div class="cell">Abteilung</div>
+        <div class="cell"></div>
+        <div class="cell"></div>
         <div class="cell">save</div>
         <div class="cell">reset</div>
       </div>

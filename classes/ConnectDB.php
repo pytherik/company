@@ -31,7 +31,7 @@ class ConnectDB
 
   private function setupParams(): void
   {
-    $conf = parse_ini_file('sql.inc.php');
+    $conf = parse_ini_file(INI_FILE);
     $this->host = $conf['host'];
     $this->user = $conf['user'];
     $this->pass = $conf['pass'];

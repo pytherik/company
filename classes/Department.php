@@ -1,6 +1,6 @@
 <?php
 
-class Department extends ConnectDB
+class Department #extends ConnectDB
 {
   private int $id;
   private string $name;
@@ -19,6 +19,10 @@ class Department extends ConnectDB
     }
   }
 
+  /**
+   * @param int $id
+   * @return Department
+   */
   public function getDepartmentById(int $id): Department
   {
     $department = new Employee();
@@ -32,22 +36,25 @@ class Department extends ConnectDB
   }
 
 
-  public function getFromDatabase(): array
-  {
-    try {
-      $pdo = $this->connect();
-      $sql = "SELECT * FROM department";
-      $stmt = $pdo->query($sql);
-      $departments = [];
-      while($dep = $stmt->fetchObject(__CLASS__)){
-        $departments[] = $dep;
-      }
-    } catch (PDOException $e) {
-      throw new PDOException('Datenbank sagt nein: ' . $e->getMessage());
-    }
-    return $departments;
-  }
+//  public function getFromDatabase(): array
+//  {
+//    try {
+//      $pdo = $this->connect();
+//      $sql = "SELECT * FROM department";
+//      $stmt = $pdo->query($sql);
+//      $departments = [];
+//      while($dep = $stmt->fetchObject(__CLASS__)){
+//        $departments[] = $dep;
+//      }
+//    } catch (PDOException $e) {
+//      throw new PDOException('Datenbank sagt nein: ' . $e->getMessage());
+//    }
+//    return $departments;
+//  }
 
+  /**
+   * @return array
+   */
   public function getAllAsObjects(): array
   {
     try {
@@ -59,7 +66,7 @@ class Department extends ConnectDB
       $handle = fopen(CSV_PATH_DEPARTMENT, 'r');
       $departments = [];
       while ($content = fgetcsv($handle)) {
-        $departments[] = new Department($content[0], $content[1]);
+        $departments[] = new Department((int)$content[0], $content[1]);
       }
       fclose($handle);
     } catch (Error $e) {
@@ -68,6 +75,11 @@ class Department extends ConnectDB
     }
     return $departments;
   }
+
+  /**
+   * @param string $name
+   * @return Department
+   */
   public function createNewDepartment(string $name): Department
   {
     if (!is_file(CSV_DEPARTMENT_ID_COUNTER)) {
@@ -77,13 +89,17 @@ class Department extends ConnectDB
 
     $department = new Department($id, $name);
     $departments = $this->getAllAsObjects();
-    $departments[] = $department; // neuen employee zu Liste ($employees) hinzufügen
+    $departments[] = $department;
     $this->storeInFile($departments);
 
     file_put_contents(CSV_DEPARTMENT_ID_COUNTER, $id + 1);
     return $department;
   }
 
+  /**
+   * @param int $id
+   * @return void
+   */
   public function delete(int $id): void
   {
     $departments = $this->getAllAsObjects();
@@ -96,10 +112,12 @@ class Department extends ConnectDB
     $this->storeInFile($departments);
   }
 
+  /**
+   * @return void
+   */
   public function store(): void
   {
     try {
-
       $departments = $this->getAllAsObjects();
       foreach ($departments as $key => $department) {
         if ($department->getId() === $this->getId()) {
@@ -113,14 +131,18 @@ class Department extends ConnectDB
     }
   }
 
+  /**
+   * @param array $departments
+   * @return void
+   */
   private function storeInFile(array $departments): void
   {
     try {
-      unlink(CSV_PATH);
+      unlink(CSV_PATH_DEPARTMENT);
       $handle = fopen(CSV_PATH_DEPARTMENT, 'w', FILE_APPEND);
       foreach ($departments as $department) {
-        $empNumArr = array_values((array)$department);
-        fputcsv($handle, $empNumArr, ',');
+        $depNumArr = array_values((array)$department);
+        fputcsv($handle, $depNumArr, ',');
       }
       fclose($handle);
     } catch (Error $e) {
