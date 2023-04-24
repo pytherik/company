@@ -12,9 +12,7 @@
 <body>
 <div class="wrapper">
   <h1>Mitarbeiter <?= $activity ?></h1>
-  <a href="index.php?action=showList">
-    <button class="btn">Abbruch</button>
-  </a>
+  <?php include 'views/navigation.php' ?>
   <form action="index.php" method="post">
     <div class="table">
       <div class="row green">

@@ -8,6 +8,10 @@ body {
     background-color: #2b2b2b;
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;
+}
 .btn {
     width: 150px;
     padding: .2rem 0;
@@ -67,6 +71,9 @@ input[type="submit"]:hover {
 
 @media screen and (max-width: 580px) {
     .table {
+        display: block;
+    }
+    nav {
         display: block;
     }
 }
