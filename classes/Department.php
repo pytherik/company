@@ -25,7 +25,7 @@ class Department #extends ConnectDB
    */
   public function getDepartmentById(int $id): Department
   {
-    $department = new Employee();
+    $department = new Department();
     $departments = $this->getAllAsObjects();
     foreach ($departments as $e) {
       if ($id === $e->getId()) {

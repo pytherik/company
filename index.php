@@ -74,7 +74,7 @@ try {
       }else if ($area === 'department') {
         $department = new Department($id, $departmentName);
         $department->store();
-        $departments = (new Employee())->getAllAsObjects();
+        $departments = (new Department())->getAllAsObjects();
       }
       $view = 'showList';
       break;
@@ -86,7 +86,7 @@ try {
       }
     default:
       // falls unerwarteter Wert für $action übergeben wird
-      if($area === 'employees') {
+      if($area === 'employee') {
       $employees = (new Employee())->getAllAsObjects();
       } else if ($area === 'department'){
       $departments = (new Department())->getAllAsObjects();
