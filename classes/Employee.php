@@ -109,6 +109,8 @@ class Employee
    */
   public function store(): void
   {
+    try {
+
     $employees = $this->getAllAsObjects();
     foreach ($employees as $key => $employee) {
       if ($employee->getId() === $this->getId()) {
@@ -117,6 +119,9 @@ class Employee
       }
     }
     $this->storeInFile($employees);
+    } catch (Error $e) {
+      throw new Exception('Fehler in store(): ' . $e->getMessage());
+    }
   }
 
   /**
