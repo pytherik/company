@@ -30,6 +30,8 @@ try {
     case 'showList':
       if ($area === 'employee') {
         $employees = (new Employee())->getAllAsObjects();
+      } else if ($area === 'department') {
+        $departments = (new Department())->getAllAsObjects();
       }
       $view = $action;
       break;

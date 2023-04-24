@@ -3,12 +3,12 @@
     <button class="btn">Liste Mitarbeiter</button>
   </a>
   <a href="index.php?action=showCreate&area=employee">
-    <button class="btn create">MA erstellen</button>
+    <button class="btn create">&#43; MA erstellen</button>
   </a>
   <a href="index.php?action=showList&area=department">
     <button class="btn">Liste Abteilungen</button>
   </a>
   <a href="index.php?action=showCreate&area=department">
-    <button class="btn create">Abteilung Erstellen</button>
+    <button class="btn create">&#43; Abteilung Erstellen</button>
   </a>
 </nav>
