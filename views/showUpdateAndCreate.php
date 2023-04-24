@@ -28,6 +28,7 @@
       <div class="row">
 
         <!--  hidden fields zur stillen übergabe der jeweiligen Parameter -->
+        <input type="hidden" name="area" value="employee">
         <input type="hidden" name="action"
                value="<?php echo (isset($employee)) ? 'update' : 'create' ?>">
         <!--        id Übergabe nur bei update-->

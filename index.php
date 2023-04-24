@@ -34,27 +34,37 @@ try {
       }
       break;
     case 'showUpdate':
-      $employee = (new Employee())->getEmployeeById($id);
-      $activity = 'bearbeiten';
-      $view = 'showUpdateAndCreate';
+      if ($area === 'employee') {
+        $employee = (new Employee())->getEmployeeById($id);
+        $activity = 'bearbeiten';
+        $view = 'showUpdateAndCreate';
+      }
       break;
     case 'showCreate':
-      $activity = 'erstellen';
-      $view = 'showUpdateAndCreate';
+      if ($area === 'employee') {
+        $activity = 'erstellen';
+        $view = 'showUpdateAndCreate';
+      }
       break;
     case 'delete':
-      (new Employee())->delete($id);
-      $employees = (new Employee())->getAllAsObjects();
-      $view = 'showList';
+      if ($area === 'employee') {
+        (new Employee())->delete($id);
+        $employees = (new Employee())->getAllAsObjects();
+        $view = 'showList';
+      }
       break;
     case 'update':
-      $employee = new Employee($id, $firstName, $lasstName, $departmentId);
-      $employee->store();
-      $employees = (new Employee())->getAllAsObjects();
-      $view = 'showList';
+      if ($area === 'employee') {
+        $employee = new Employee($id, $firstName, $lasstName, $departmentId);
+        $employee->store();
+        $employees = (new Employee())->getAllAsObjects();
+        $view = 'showList';
+      }
       break;
     case 'create':
-      (new Employee())->createNewEmployee($firstName, $lasstName, $departmentId);
+      if ($area === 'employee') {
+        (new Employee())->createNewEmployee($firstName, $lasstName, $departmentId);
+      }
     default:
       // falls unerwarteter Wert für $action übergeben wird
       $employees = (new Employee())->getAllAsObjects();

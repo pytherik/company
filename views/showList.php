@@ -12,7 +12,7 @@
 <body>
   <div class="wrapper">
     <h1>Mitarbeiter Liste</h1>
-    <a href="index.php?action=showCreate">
+    <a href="index.php?action=showCreate&area=employee">
       <button class="btn">MA erstellen</button>
     </a>
     <div class="table">
@@ -20,7 +20,7 @@
 <!--        <div class="cell">ID</div>-->
         <div class="cell">Vorname</div>
         <div class="cell">Nachname</div>
-        <div class="cell">Abteilung ID</div>
+        <div class="cell">Abteilung</div>
         <div class="cell">Löschen</div>
         <div class="cell">Ändern</div>
       </div>
@@ -33,12 +33,12 @@
           <div class="cell" data-title="nachname"><?php echo $emp->getLastname() ?></div>
           <div class="cell" data-title="abteilungId"><?php echo $emp->getDepartmentId() ?></div>
           <div class="cell" data-title="löschen">
-            <a href="index.php?id=<?php echo $emp->getId()?>&action=delete">
+            <a href="index.php?id=<?php echo $emp->getId()?>&action=delete&area=employee">
               <button class="delete">&#10006;</button>
             </a>
           </div>
           <div class="cell" data-title="ändern">
-            <a href="index.php?id=<?php echo $emp->getId()?>&action=showUpdate">
+            <a href="index.php?id=<?php echo $emp->getId()?>&action=showUpdate&area=employee">
               <button>&#10000;</button>
             </a>
           </div>
