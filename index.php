@@ -75,7 +75,7 @@ try {
   $view = 'error';
 }
 
-include sprintf("views/%s.php", $view);
+include sprintf("views/%s.php", $view . ucfirst($area));
 
 
 //echo "<pre>";
