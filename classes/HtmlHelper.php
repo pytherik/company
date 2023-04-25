@@ -10,8 +10,8 @@ class HtmlHelper
    */
     public static function getSelectOption(array $allObjects, string $name, int $preselected): string
     {
-      $html = "select name='$name''>/n";
-      foreacht($allObjects as $object) {
+      $html = "select name='$name'>/n";
+      foreach($allObjects as $object) {
         $selected = ($preselected === $object->getId()) ? 'selected' : '';
         $html .= "<option value='" . $object->getId() . "'selected>" . $object->getName() . "</option>\n";
     }
