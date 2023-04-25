@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1>Alle Mitarbeiter</h1>
+  <h1 class="heading">Alle Mitarbeiter</h1>
   <?php include 'views/navigation.php' ?>
   <div class="table">
     <div class="row header">

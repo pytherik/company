@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1>Alle Abteilungen</h1>
+  <h1 class="heading">Alle Abteilungen</h1>
   <?php include 'views/navigation.php' ?>
   <div class="table">
     <div class="row blue">

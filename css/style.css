@@ -20,6 +20,10 @@ nav {
     color: #fff;
 }
 
+.heading {
+    text-align: center;
+    margin-bottom: 4rem;
+}
 .ma-list {
     background-color: #E8581F99;
 }
