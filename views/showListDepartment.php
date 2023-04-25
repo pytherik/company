@@ -11,15 +11,15 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1>Alle Abteilungen</h1>
+  <h1 class="heading">Alle Abteilungen</h1>
   <?php include 'views/navigation.php' ?>
   <div class="table">
     <div class="row blue">
       <!--        <div class="cell">ID</div>-->
       <div class="cell">ID</div>
       <div class="cell">Abteilung</div>
-      <div class="cell">Löschen</div>
-      <div class="cell">Ändern</div>
+      <div class="cell center">Löschen</div>
+      <div class="cell center">Ändern</div>
     </div>
     <?php
     foreach ($departments as $dep) { ?>
@@ -27,12 +27,12 @@
         <!--          <div class="cell" data-title="id">--><?php //echo $emp->getId() ?><!--</div>-->
         <div class="cell" data-title="Id"><?php echo $dep->getId() ?></div>
         <div class="cell" data-title="name"><?php echo $dep->getName() ?></div>
-        <div class="cell" data-title="löschen">
+        <div class="cell center" data-title="löschen">
           <a href="index.php?id=<?php echo $dep->getId() ?>&action=delete&area=department">
             <button class="delete">&#10006;</button>
           </a>
         </div>
-        <div class="cell" data-title="ändern">
+        <div class="cell center" data-title="ändern">
           <a href="index.php?id=<?php echo $dep->getId() ?>&action=showUpdate&area=department">
             <button>&#10000;</button>
           </a>

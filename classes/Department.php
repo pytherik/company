@@ -82,17 +82,17 @@ class Department #extends ConnectDB
    */
   public function createNewDepartment(string $name): Department
   {
-    if (!is_file(CSV_DEPARTMENT_ID_COUNTER)) {
-      file_put_contents(CSV_DEPARTMENT_ID_COUNTER, 1);
+    if (!is_file(CSV_PATH_DEPARTMENT_ID_COUNTER)) {
+      file_put_contents(CSV_PATH_DEPARTMENT_ID_COUNTER, 1);
     }
-    $id = file_get_contents(CSV_DEPARTMENT_ID_COUNTER);
+    $id = file_get_contents(CSV_PATH_DEPARTMENT_ID_COUNTER);
 
     $department = new Department($id, $name);
     $departments = $this->getAllAsObjects();
     $departments[] = $department;
     $this->storeInFile($departments);
 
-    file_put_contents(CSV_DEPARTMENT_ID_COUNTER, $id + 1);
+    file_put_contents(CSV_PATH_DEPARTMENT_ID_COUNTER, $id + 1);
     return $department;
   }
 

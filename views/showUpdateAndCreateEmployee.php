@@ -20,8 +20,8 @@
         <div class="cell">Vorname</div>
         <div class="cell">Nachname</div>
         <div class="cell">Abteilung ID</div>
-        <div class="cell">save</div>
-        <div class="cell">reset</div>
+        <div class="cell center">save</div>
+        <div class="cell center">reset</div>
       </div>
       <div class="row">
 
@@ -46,14 +46,22 @@
                  size="18" autocomplete="off" required>
         </div>
         <div class="cell">
-          <input type="number" name="departmentId"
-                 value="<?php if (isset($employee)) echo $employee->getDepartmentId() ?>"
-                 min="1" max="100" autocomplete="off" required>
+          <select name="departmentId">
+            <?php foreach ($departments as $department) {
+              if ($employee && ($department->getName() === $employee->getDepartmentName())) { ?>
+                <option value="<?= $department->getId() ?>" selected><?= $department->getName() ?></option>
+              <?php } else { ?>
+                <option value="<?= $department->getId() ?>"><?= $department->getName() ?></option>
+                <?php
+              }
+            }
+            ?>
+          </select>
         </div>
-        <div class="cell">
+        <div class="cell center">
           <input class="save" type="submit" value=&#10004;>
         </div>
-        <div>&nbsp;&nbsp;
+        <div class="cell center">&nbsp;&nbsp;
           <input class="reset" type="reset" value=&olarr;>
         </div>
       </div>

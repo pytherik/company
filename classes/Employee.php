@@ -37,25 +37,20 @@ class Employee
     // und oder in der aufrufenden Funktion.
     try {
 
-      if (!is_file(CSV_PATH)) {
-        fopen(CSV_PATH, 'w');
+      if (!is_file(CSV_PATH_EMPLOYEE)) {
+        fopen(CSV_PATH_EMPLOYEE, 'w');
       }
-      $handle = fopen(CSV_PATH, 'r');
+      $handle = fopen(CSV_PATH_EMPLOYEE, 'r');
       $employees = [];
       while ($content = fgetcsv($handle)) {
         $employees[] = new Employee($content[0], $content[1], $content[2], $content[3]);
-      } 
+      }
       fclose($handle);
     } catch (Error $e) {
       // wird im view error.php ausgegeben
-      throw new Exception($e->getMessage() . ' '  . implode('-',$e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
+      throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
     }
     return $employees;
-  }
-
-  public function showError()
-  {
-
   }
 
   /**
@@ -88,18 +83,18 @@ class Employee
     // dazu schreiben wir die nächste id in die Datei CSV_PATH_ID_COUNTER
 
     // sicherstellen, dass es die Datei gibt, der Startwert ist 1
-    if (!is_file(CSV_PATH_ID_COUNTER)) {
-      file_put_contents(CSV_PATH_ID_COUNTER, 1);
+    if (!is_file(CSV_PATH_EMPLOYEE_ID_COUNTER)) {
+      file_put_contents(CSV_PATH_EMPLOYEE_ID_COUNTER, 1);
     }
     // nächste freie id auslesen
-    $id = file_get_contents(CSV_PATH_ID_COUNTER);
+    $id = file_get_contents(CSV_PATH_EMPLOYEE_ID_COUNTER);
 
     $employee = new Employee($id, $firstName, $lastName, $departmentId);
     $employees = $this->getAllAsObjects();
     $employees[] = $employee; // neuen employee zu Liste ($employees) hinzufügen
     $this->storeInFile($employees);
 
-    file_put_contents(CSV_PATH_ID_COUNTER, $id + 1);
+    file_put_contents(CSV_PATH_EMPLOYEE_ID_COUNTER, $id + 1);
     return $employee;
   }
 
@@ -111,14 +106,14 @@ class Employee
   {
     try {
 
-    $employees = $this->getAllAsObjects();
-    foreach ($employees as $key => $employee) {
-      if ($employee->getId() === $this->getId()) {
-        $employees[$key] = $this;
-        break;
+      $employees = $this->getAllAsObjects();
+      foreach ($employees as $key => $employee) {
+        if ($employee->getId() === $this->getId()) {
+          $employees[$key] = $this;
+          break;
+        }
       }
-    }
-    $this->storeInFile($employees);
+      $this->storeInFile($employees);
     } catch (Error $e) {
       throw new Exception('Fehler in store(): ' . $e->getMessage());
     }
@@ -149,8 +144,8 @@ class Employee
   private function storeInFile(array $employees): void
   {
     try {
-      unlink(CSV_PATH);
-      $handle = fopen(CSV_PATH, 'w', FILE_APPEND);
+      unlink(CSV_PATH_EMPLOYEE);
+      $handle = fopen(CSV_PATH_EMPLOYEE, 'w', FILE_APPEND);
       foreach ($employees as $employee) {
         $empNumArr = array_values((array)$employee);
         fputcsv($handle, $empNumArr, ',');
@@ -197,4 +192,16 @@ class Employee
     return $this->departmentId;
   }
 
+  public function getDepartmentName(): string
+  {
+    $departments = (new Department())->getAllAsObjects();
+    foreach ($departments as $department) {
+      if ($this->getDepartmentId() === $department->getId()) {
+        return $department->getName();
+      } else {
+        continue;
+      }
+    }
+    return 'NULL';
+  }
 }

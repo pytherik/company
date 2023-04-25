@@ -12,12 +12,18 @@ nav {
     display: flex;
     justify-content: space-between;
 }
+
 .btn {
     cursor: pointer;
     width: 150px;
     padding: .2rem 0;
     margin-bottom: 5px;
     color: #fff;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 4rem;
 }
 
 .ma-list {
@@ -31,6 +37,7 @@ nav {
 .create {
     background-color: #27ae6099;
 }
+
 button:hover,
 input[type="submit"]:hover {
     cursor: pointer;
@@ -46,6 +53,7 @@ input[type="submit"]:hover {
     font-weight: bolder;
     padding: .15rem .32rem;
 }
+
 .delete {
     color: #ea6153;
 }
@@ -63,9 +71,14 @@ input[type="submit"]:hover {
 .blue .cell {
     color: #fff;
 }
+
 .message {
     background-color: #E8581F99;
     padding: .5rem 0;
+}
+
+.center {
+    text-align: center;
 }
 
 @media screen and (max-width: 580px) {
@@ -86,6 +99,7 @@ input[type="submit"]:hover {
     .table {
         display: block;
     }
+
     nav {
         display: block;
     }

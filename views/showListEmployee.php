@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1>Alle Mitarbeiter</h1>
+  <h1 class="heading">Alle Mitarbeiter</h1>
   <?php include 'views/navigation.php' ?>
   <div class="table">
     <div class="row header">
@@ -19,8 +19,8 @@
       <div class="cell">Vorname</div>
       <div class="cell">Nachname</div>
       <div class="cell">Abteilung</div>
-      <div class="cell">Löschen</div>
-      <div class="cell">Ändern</div>
+      <div class="cell center">Löschen</div>
+      <div class="cell center">Ändern</div>
     </div>
     <?php
     foreach ($employees as $emp) {
@@ -29,13 +29,13 @@
         <!--          <div class="cell" data-title="id">--><?php //echo $emp->getId() ?><!--</div>-->
         <div class="cell" data-title="vorname"><?php echo $emp->getFirstname() ?></div>
         <div class="cell" data-title="nachname"><?php echo $emp->getLastname() ?></div>
-        <div class="cell" data-title="abteilungId"><?php echo $emp->getDepartmentId() ?></div>
-        <div class="cell" data-title="löschen">
+        <div class="cell" data-title="abteilungId"><?php echo $emp->getDepartmentName() ?></div>
+        <div class="cell center" data-title="löschen">
           <a href="index.php?id=<?php echo $emp->getId() ?>&action=delete&area=employee">
             <button class="delete">&#10006;</button>
           </a>
         </div>
-        <div class="cell" data-title="ändern">
+        <div class="cell center" data-title="ändern">
           <a href="index.php?id=<?php echo $emp->getId() ?>&action=showUpdate&area=employee">
             <button>&#10000;</button>
           </a>

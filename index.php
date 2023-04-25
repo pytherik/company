@@ -41,6 +41,7 @@ try {
     case 'showUpdate':
       if ($area === 'employee') {
         $employee = (new Employee())->getEmployeeById($id);
+        $departments = (new Department())->getAllAsObjects();
         $activity = 'bearbeiten';
       } else if ($area === 'department'){
         $department = (new Department())->getDepartmentById($id);
@@ -50,6 +51,7 @@ try {
       break;
     case 'showCreate':
       if ($area === 'employee') {
+        $departments = (new Department())->getAllAsObjects();
         $activity = 'erstellen';
       } else if ($area === 'department') {
         $activity = 'erstellen';
