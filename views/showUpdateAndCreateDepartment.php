@@ -40,15 +40,13 @@
                  value="<?php if (isset($department)) echo $department->getName() ?>"
                  size="18" autocomplete="off" autofocus required>
         </div>
+        <div class="cell"></div>
+        <div class="cell"></div>
         <div class="cell">
-        </div>
-        <div class="cell">
-        </div>
-        <div class="cell">
-          <input class="save" type="submit" value=&#10004;>
+          <input class="save center" type="submit" value=&#10004;>
         </div>
         <div>&nbsp;&nbsp;
-          <input class="reset" type="reset" value=&olarr;>
+          <input class="reset center" type="reset" value=&olarr;>
         </div>
       </div>
     </div>
