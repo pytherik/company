@@ -49,13 +49,13 @@
           <select name="departmentId">
             <?php foreach ($departments as $department) {
               if ($employee && ($department->getName() === $employee->getDepartmentName())) { ?>
-                <option value="<?= $department->getId() ?>" selected ><?= $department->getName()?></option>
-                  <?php } else { ?>
-                <option  value="<?= $department->getId() ?>"><?= $department->getName()?></option>
-              <?php
+                <option value="<?= $department->getId() ?>" selected><?= $department->getName() ?></option>
+              <?php } else { ?>
+                <option value="<?= $department->getId() ?>"><?= $department->getName() ?></option>
+                <?php
               }
-              }
-              ?>
+            }
+            ?>
           </select>
         </div>
         <div class="cell">

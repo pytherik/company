@@ -44,18 +44,13 @@ class Employee
       $employees = [];
       while ($content = fgetcsv($handle)) {
         $employees[] = new Employee($content[0], $content[1], $content[2], $content[3]);
-      } 
+      }
       fclose($handle);
     } catch (Error $e) {
       // wird im view error.php ausgegeben
-      throw new Exception($e->getMessage() . ' '  . implode('-',$e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
+      throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
     }
     return $employees;
-  }
-
-  public function showError()
-  {
-
   }
 
   /**
@@ -111,14 +106,14 @@ class Employee
   {
     try {
 
-    $employees = $this->getAllAsObjects();
-    foreach ($employees as $key => $employee) {
-      if ($employee->getId() === $this->getId()) {
-        $employees[$key] = $this;
-        break;
+      $employees = $this->getAllAsObjects();
+      foreach ($employees as $key => $employee) {
+        if ($employee->getId() === $this->getId()) {
+          $employees[$key] = $this;
+          break;
+        }
       }
-    }
-    $this->storeInFile($employees);
+      $this->storeInFile($employees);
     } catch (Error $e) {
       throw new Exception('Fehler in store(): ' . $e->getMessage());
     }
@@ -196,16 +191,17 @@ class Employee
   {
     return $this->departmentId;
   }
+
   public function getDepartmentName(): string
   {
     $departments = (new Department())->getAllAsObjects();
-    foreach($departments as $department) {
-      if ($this->getDepartmentId() === $department->getId()){
+    foreach ($departments as $department) {
+      if ($this->getDepartmentId() === $department->getId()) {
         return $department->getName();
       } else {
         continue;
       }
     }
-        return 'NULL';
+    return 'NULL';
   }
 }
