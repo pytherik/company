@@ -29,7 +29,7 @@
         <!--          <div class="cell" data-title="id">--><?php //echo $emp->getId() ?><!--</div>-->
         <div class="cell" data-title="vorname"><?php echo $emp->getFirstname() ?></div>
         <div class="cell" data-title="nachname"><?php echo $emp->getLastname() ?></div>
-        <div class="cell" data-title="abteilungId"><?php echo $emp->getDepartmentId() ?></div>
+        <div class="cell" data-title="abteilungId"><?php echo $emp->getDepartmentName() ?></div>
         <div class="cell" data-title="löschen">
           <a href="index.php?id=<?php echo $emp->getId() ?>&action=delete&area=employee">
             <button class="delete">&#10006;</button>
