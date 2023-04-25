@@ -20,8 +20,8 @@
         <div class="cell">Vorname</div>
         <div class="cell">Nachname</div>
         <div class="cell">Abteilung ID</div>
-        <div class="cell">save</div>
-        <div class="cell">reset</div>
+        <div class="cell center">save</div>
+        <div class="cell center">reset</div>
       </div>
       <div class="row">
 
@@ -58,10 +58,10 @@
             ?>
           </select>
         </div>
-        <div class="cell">
+        <div class="cell center">
           <input class="save" type="submit" value=&#10004;>
         </div>
-        <div>&nbsp;&nbsp;
+        <div class="cell center">&nbsp;&nbsp;
           <input class="reset" type="reset" value=&olarr;>
         </div>
       </div>
