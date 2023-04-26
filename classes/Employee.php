@@ -194,14 +194,15 @@ class Employee
 
   public function getDepartmentName(): string
   {
-    $departments = (new Department())->getAllAsObjects();
-    foreach ($departments as $department) {
-      if ($this->getDepartmentId() === $department->getId()) {
-        return $department->getName();
-      } else {
-        continue;
-      }
-    }
-    return 'NULL';
+//    $departments = (new Department())->getAllAsObjects();
+//    foreach ($departments as $department) {
+//      if ($this->getDepartmentId() === $department->getId()) {
+//        return $department->getName();
+//      } else {
+//        continue;
+//      }
+//    }
+//    return 'NULL';
+    return ((new Department())->getDepartmentById($this->departmentId))->getName();
   }
 }
