@@ -46,7 +46,11 @@
                  size="18" autocomplete="off" required>
         </div>
         <div class="cell">
-          <?php echo HtmlHelper::buildSelectOption($departments, 'departmentId', $employee->getDepartmentId()); ?>
+
+          <?php
+          $preselected = (isset($employee)) ?  $employee->getDepartmentId() :  null;
+            echo HtmlHelper::buildSelectOption($departments, 'departmentId', $preselected);
+          ?>
         </div>
         <div class="cell center">
           <input class="save" type="submit" value=&#10004;>
