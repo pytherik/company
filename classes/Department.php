@@ -23,7 +23,7 @@ class Department #extends ConnectDB
    * @param int $id
    * @return Department
    */
-  public function getDepartmentById(int $id): Department
+  public function getObjectById(int $id): Department
   {
     $department = new Department();
     $departments = $this->getAllAsObjects();
@@ -80,7 +80,7 @@ class Department #extends ConnectDB
    * @param string $name
    * @return Department
    */
-  public function createNewDepartment(string $name): Department
+  public function createNewObject(string $name): Department
   {
     if (!is_file(CSV_PATH_DEPARTMENT_ID_COUNTER)) {
       file_put_contents(CSV_PATH_DEPARTMENT_ID_COUNTER, 1);

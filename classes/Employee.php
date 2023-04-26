@@ -58,7 +58,7 @@ class Employee
    * @return Employee
    * @throws Exception
    */
-  public function getEmployeeById(int $id): Employee
+  public function getObjectById(int $id): Employee
   {
     $employee = new Employee();
     $employees = $this->getAllAsObjects();
@@ -77,7 +77,7 @@ class Employee
    * @return Employee
    * @throws Exception
    */
-  public function createNewEmployee(string $firstName, string $lastName, int $departmentId): Employee
+  public function createNewObject(string $firstName, string $lastName, int $departmentId): Employee
   {
     // wir brauchen eine auto_increment id für das neue Employee-Objekt
     // dazu schreiben wir die nächste id in die Datei CSV_PATH_ID_COUNTER
@@ -203,6 +203,6 @@ class Employee
 //      }
 //    }
 //    return 'NULL';
-    return ((new Department())->getDepartmentById($this->departmentId))->getName();
+    return ((new Department())->getObjectById($this->departmentId))->getName();
   }
 }

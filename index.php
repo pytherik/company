@@ -28,11 +28,11 @@ try {
       break;
     case 'showUpdate':
       if ($area === 'employee') {
-        $employee = (new Employee())->getEmployeeById($id);
+        $employee = (new Employee())->getObjectById($id);
         $departments = (new Department())->getAllAsObjects();
         $activity = 'bearbeiten';
       } else if ($area === 'department'){
-        $department = (new Department())->getDepartmentById($id);
+        $department = (new Department())->getObjectById($id);
         $activity = 'bearbeiten';
       }
       $view = 'showUpdateAndCreate';
@@ -70,9 +70,9 @@ try {
       break;
     case 'create':
       if ($area === 'employee') {
-        (new Employee())->createNewEmployee($firstName, $lasstName, $departmentId);
+        (new Employee())->createNewObject($firstName, $lasstName, $departmentId);
       } else if ($area === 'department') {
-        (new Department())->createNewDepartment($departmentName);
+        (new Department())->createNewObject($departmentName);
       }
     default:
       // falls unerwarteter Wert für $action übergeben wird
