@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'classes/Saveable.php';
 include 'classes/Employee.php';
 include 'classes/Department.php';
 include 'classes/HtmlHelper.php';

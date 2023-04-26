@@ -1,6 +1,6 @@
 <?php
 
-class Employee
+class Employee implements Saveable
 {
   private int $id;
   private string $firstname;

@@ -1,6 +1,6 @@
 <?php
 
-class Department #extends ConnectDB
+class Department implements Saveable #extends ConnectDB
 {
   private int $id;
   private string $name;
