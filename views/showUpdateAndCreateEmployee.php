@@ -46,17 +46,7 @@
                  size="18" autocomplete="off" required>
         </div>
         <div class="cell">
-          <select name="departmentId">
-            <?php foreach ($departments as $department) {
-              if ($employee && ($department->getName() === $employee->getDepartmentName())) { ?>
-                <option value="<?= $department->getId() ?>" selected><?= $department->getName() ?></option>
-              <?php } else { ?>
-                <option value="<?= $department->getId() ?>"><?= $department->getName() ?></option>
-                <?php
-              }
-            }
-            ?>
-          </select>
+          <?php echo HtmlHelper::buildSelectOption($departments, 'departmentId', $employee->getDepartmentId()); ?>
         </div>
         <div class="cell center">
           <input class="save" type="submit" value=&#10004;>

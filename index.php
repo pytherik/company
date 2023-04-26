@@ -1,16 +1,8 @@
 <?php
 include 'config.php';
-#include 'classes/ConnectDB.php';
 include 'classes/Employee.php';
 include 'classes/Department.php';
-//echo "<pre>";
-//print_r($_POST);
-//echo "</pre>";
-// isset($_GET['action']) ? $view = $_GET['action'] : $view = 'showList';
-//
-// es geht noch kürzer - 'null coalescing' operator
-// Koaleszenz: das Zusammenwachsen oder Verschmelzen von
-//             getrennt wahrnehmbaren Dingen oder Teilen
+include 'classes/HtmlHelper.php';
 
 $action = $_REQUEST['action'] ?? 'showList';
 $area = $_REQUEST['area'] ?? 'employee';
@@ -21,10 +13,6 @@ $departmentName = $_POST['departmentName'] ?? '';
 $firstName = $_POST['firstName'] ?? '';
 $lasstName = $_POST['lastName'] ?? '';
 $departmentId = $_POST['departmentId'] ?? '';
-
-// Übergabevariablen desinfizieren (sanitize)
-// kleiner Ausflug XSS: in input-text-Felder javascript schreiben,
-// z.B. <script>alert('mähh');</script>
 
 try {
 
@@ -101,7 +89,6 @@ try {
 }
 
 include sprintf("views/%s.php", $view . ucfirst($area));
-
 
 //echo "<pre>";
 //print_r($_REQUEST);
