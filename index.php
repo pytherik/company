@@ -16,7 +16,6 @@ $lasstName = $_POST['lastName'] ?? '';
 $departmentId = $_POST['departmentId'] ?? '';
 
 try {
-
   switch ($action) {
     case 'showList':
       if ($area === 'employee') {
