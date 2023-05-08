@@ -3,23 +3,23 @@
 class Employee implements Saveable
 {
   private int $id;
-  private string $firstname;
-  private string $lastname;
+  private string $firstName;
+  private string $lastName;
   private int $departmentId;
 
   /**
    * @param int|null $id
-   * @param string|null $firstname
-   * @param string|null $lastname
+   * @param string|null $firstName
+   * @param string|null $lastName
    * @param int|null $departmentId
    */
-  public function __construct(?int    $id = null, ?string $firstname = null,
-                              ?string $lastname = null, ?int $departmentId = null)
+   public function __construct(?int    $id = null, ?string $firstName = null,
+                              ?string $lastName = null, ?int $departmentId = null)
   {
-    if (isset($id) && isset($firstname) && isset($lastname) && isset($departmentId)) {
+    if (isset($id) && isset($firstName) && isset($lastName) && isset($departmentId)) {
       $this->id = $id;
-      $this->firstname = $firstname;
-      $this->lastname = $lastname;
+      $this->firstName = $firstName;
+      $this->lastName = $lastName;
       $this->departmentId = $departmentId;
     }
   }
@@ -30,11 +30,7 @@ class Employee implements Saveable
    */
   public function getAllAsObjects(): array
   {
-    // try versucht den Block zwischen den Klammern auszuführen.
-    // Wenn dies mislingt, gibt es entweder einen Error oder eine Exception
-    // Dieses muss mit einem catch-Teil aufgefangen werden.
-    // Dieser catch-Teil muss anschliessend geschrieben werden
-    // und oder in der aufrufenden Funktion.
+    if (PERSISTENCY === 'file'){
     try {
 
       if (!is_file(CSV_PATH_EMPLOYEE)) {
@@ -51,6 +47,22 @@ class Employee implements Saveable
       throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
     }
     return $employees;
+    } else {
+      try {
+        $dbh = new PDO('mysql:host=localhost;dbname=company', 'erik', '321null');
+        $sql = 'SELECT * from employee';
+        $result = $dbh->query($sql);
+        $employees = [];
+        while ($row = $result->fetchObject('Employee')) {
+          $employees[] = $row;
+        }
+        $dbh = null;
+      } catch (PDOException $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+      }
+      return $employees;
+    }
   }
 
   /**
@@ -105,7 +117,6 @@ class Employee implements Saveable
   public function store(): void
   {
     try {
-
       $employees = $this->getAllAsObjects();
       foreach ($employees as $key => $employee) {
         if ($employee->getId() === $this->getId()) {
@@ -168,29 +179,27 @@ class Employee implements Saveable
   /**
    * @return string
    */
-  public
-  function getFirstname(): string
+  public function getFirstName(): string
   {
-    return $this->firstname;
+    return $this->firstName;
   }
 
   /**
    * @return string
    */
-  public
-  function getLastname(): string
+  public function getLastName(): string
   {
-    return $this->lastname;
+    return $this->lastName;
   }
 
   /**
    * @return int
    */
-  public
-  function getDepartmentId(): int
+  public function getDepartmentId(): int
   {
     return $this->departmentId;
   }
+
 
   public function getDepartmentName(): string
   {

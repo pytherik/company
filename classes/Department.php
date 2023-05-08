@@ -57,21 +57,35 @@ class Department implements Saveable #extends ConnectDB
    */
   public function getAllAsObjects(): array
   {
-    try {
+    if (PERSISTENCY === 'file') {
+      try {
 
-      if (!is_file(CSV_PATH_DEPARTMENT)) {
-        fopen(CSV_PATH_DEPARTMENT, 'w');
-      }
+        if (!is_file(CSV_PATH_DEPARTMENT)) {
+          fopen(CSV_PATH_DEPARTMENT, 'w');
+        }
 
-      $handle = fopen(CSV_PATH_DEPARTMENT, 'r');
-      $departments = [];
-      while ($content = fgetcsv($handle)) {
-        $departments[] = new Department((int)$content[0], $content[1]);
+        $handle = fopen(CSV_PATH_DEPARTMENT, 'r');
+        $departments = [];
+        while ($content = fgetcsv($handle)) {
+          $departments[] = new Department((int)$content[0], $content[1]);
+        }
+        fclose($handle);
+      } catch (Error $e) {
+        // wird im view error.php ausgegeben
+        throw new Error('Etwas ist nicht ok: ' . $e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
       }
-      fclose($handle);
-    } catch (Error $e) {
-      // wird im view error.php ausgegeben
-      throw new Error('Etwas ist nicht ok: '. $e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
+    } else {
+      try {
+        $dbh = new PDO('mysql:host=localhost;dbname=company', 'erik', '321null');
+        $sql = "SELECT * FROM department";
+        $stmt = $dbh->query($sql);
+        $departments = [];
+        while ($dep = $stmt->fetchObject(__CLASS__)) {
+          $departments[] = $dep;
+        }
+      } catch (PDOException $e) {
+        throw new PDOException('Datenbank sagt nein: ' . $e->getMessage());
+      }
     }
     return $departments;
   }
