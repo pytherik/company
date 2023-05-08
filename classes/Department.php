@@ -76,7 +76,7 @@ class Department implements Saveable #extends ConnectDB
       }
     } else {
       try {
-        $dbh = new PDO('mysql:host=localhost;dbname=company', 'erik', '321null');
+        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
         $sql = "SELECT * FROM department";
         $stmt = $dbh->query($sql);
         $departments = [];

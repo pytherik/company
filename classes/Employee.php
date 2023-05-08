@@ -49,7 +49,7 @@ class Employee implements Saveable
     return $employees;
     } else {
       try {
-        $dbh = new PDO('mysql:host=localhost;dbname=company', 'erik', '321null');
+        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
         $sql = 'SELECT * from employee';
         $result = $dbh->query($sql);
         $employees = [];
