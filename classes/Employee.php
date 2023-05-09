@@ -158,7 +158,7 @@ class Employee implements Saveable
      * @return void
      * @throws Exception
      */
-    public function store(): void
+    public function updateObject(): void
     {
         try {
             $employees = $this->getAllAsObjects();

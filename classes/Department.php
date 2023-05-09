@@ -130,7 +130,7 @@ class Department implements Saveable #extends ConnectDB
   /**
    * @return void
    */
-  public function store(): void
+  public function updateObject(): void
   {
     try {
       $departments = $this->getAllAsObjects();
