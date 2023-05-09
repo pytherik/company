@@ -31,20 +31,17 @@ try {
       if ($area === 'employee') {
         $employee = (new Employee())->getObjectById($id);
         $departments = (new Department())->getAllAsObjects();
-        $activity = 'bearbeiten';
       } else if ($area === 'department'){
         $department = (new Department())->getObjectById($id);
-        $activity = 'bearbeiten';
       }
+      $activity = 'bearbeiten';
       $view = 'showUpdateAndCreate';
       break;
     case 'showCreate':
       if ($area === 'employee') {
         $departments = (new Department())->getAllAsObjects();
-        $activity = 'erstellen';
-      } else if ($area === 'department') {
-        $activity = 'erstellen';
       }
+      $activity = 'erstellen';
       $view = 'showUpdateAndCreate';
       break;
     case 'delete':

@@ -43,7 +43,7 @@ class Employee implements Saveable
                 }
                 fclose($handle);
             } catch (Error $e) {
-                // wird im view error.php ausgegeben
+                //todo style error.php
                 throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
             }
         } else {
@@ -81,8 +81,14 @@ class Employee implements Saveable
             return $employee;
         } else {
             try {
-                //info Version mit prepared Statement
                 $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+                //info Version bisher
+                /*
+                 * $sql = "SELECT * from employee WHERE id = :id";
+                 * $result = $dbh->query($sql);
+                 * $employee = $result-fetch_object(__CLASS__);
+                */
+                //info Version mit prepared Statement
 
                 //info nur variable Werte werden mit :... gekennzeichnet
                 $sql = "SELECT * from employee WHERE id = :id";
@@ -116,10 +122,7 @@ class Employee implements Saveable
      */
     public function createNewObject(string $firstName, string $lastName, int $departmentId): Employee
     {
-        // wir brauchen eine auto_increment id für das neue Employee-Objekt
-        // dazu schreiben wir die nächste id in die Datei CSV_PATH_ID_COUNTER
-
-        // sicherstellen, dass es die Datei gibt, der Startwert ist 1
+        if(PERSISTENCY === 'file') {
         if (!is_file(CSV_PATH_EMPLOYEE_ID_COUNTER)) {
             file_put_contents(CSV_PATH_EMPLOYEE_ID_COUNTER, 1);
         }
@@ -133,6 +136,22 @@ class Employee implements Saveable
 
         file_put_contents(CSV_PATH_EMPLOYEE_ID_COUNTER, $id + 1);
         return $employee;
+        } else {
+            try{
+            $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+            $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, :firstName, :lastName, :departmentId)";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam('firstName', $firstName, PDO::PARAM_STR);
+            $stmt->bindParam('lastName', $lastName, PDO::PARAM_STR);
+            $stmt->bindParam('departmentId', $departmentId, PDO::PARAM_INT);
+            $stmt->execute();
+            $id = $dbh->lastInsertId();
+            $dbh = null;
+            } catch(PDOException $e) {
+                throw new Exception($e->getMessage());
+            }
+            return new Employee($id, $firstName, $lastName, $departmentId);
+        }
     }
 
     /**
@@ -156,23 +175,6 @@ class Employee implements Saveable
     }
 
     /**
-     * @param int $id
-     * @return void
-     * @throws Exception
-     */
-    public function delete(int $id): void
-    {
-        $employees = $this->getAllAsObjects();
-        foreach ($employees as $key => $employee) {
-            if ($employee->getId() === $id) {
-                unset($employees[$key]);
-                break;
-            }
-        }
-        $this->storeInFile($employees);
-    }
-
-    /**
      * @param array $employees
      * @return void
      * @throws Exception
@@ -189,6 +191,36 @@ class Employee implements Saveable
             fclose($handle);
         } catch (Error $e) {
             throw new Exception('Fehler in store in file: ' . $e->getMessage() . ' ' . implode('-', $e->getTrace()));
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     * @throws Exception
+     */
+    public function delete(int $id): void
+    {
+        if (PERSISTENCY === 'file') {
+        $employees = $this->getAllAsObjects();
+        foreach ($employees as $key => $employee) {
+            if ($employee->getId() === $id) {
+                unset($employees[$key]);
+                break;
+            }
+        }
+        $this->storeInFile($employees);
+        } else {
+            try {
+            $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+            $sql = "DELETE FROM employee WHERE id = :id";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam('id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $dbh = null;
+            } catch (PDOException $e) {
+                throw new Exception($e->getMessage());
+            }
         }
     }
 
