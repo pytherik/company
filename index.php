@@ -59,7 +59,7 @@ try {
         $employee = new Employee($id, $firstName, $lasstName, $departmentId);
         $employee->updateObject();
         $employees = (new Employee())->getAllAsObjects();
-      }else if ($area === 'department') {
+      } else if ($area === 'department') {
         $department = new Department($id, $departmentName);
         $department->updateObject();
         $departments = (new Department())->getAllAsObjects();
