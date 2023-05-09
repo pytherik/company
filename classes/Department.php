@@ -83,6 +83,7 @@ class Department implements Saveable #extends ConnectDB
         while ($dep = $stmt->fetchObject(__CLASS__)) {
           $departments[] = $dep;
         }
+        $dbh = null;
       } catch (PDOException $e) {
         throw new PDOException('Datenbank sagt nein: ' . $e->getMessage());
       }

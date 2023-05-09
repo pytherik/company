@@ -87,6 +87,7 @@ try {
   }
 } catch (Exception $e) {
   $view = 'error';
+  $area = '';
 }
 
 include sprintf("views/%s.php", $view . ucfirst($area));
