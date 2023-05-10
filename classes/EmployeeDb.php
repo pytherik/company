@@ -1,29 +1,7 @@
 <?php
 
-class EmployeeDb implements Saveable
+class EmployeeDb extends Employee
 {
-  private int $id;
-  private string $firstName;
-  private string $lastName;
-  private int $departmentId;
-
-  /**
-   * @param int|null $id
-   * @param string|null $firstName
-   * @param string|null $lastName
-   * @param int|null $departmentId
-   */
-  public function __construct(?int    $id = null, ?string $firstName = null,
-                              ?string $lastName = null, ?int $departmentId = null)
-  {
-    if (isset($id) && isset($firstName) && isset($lastName) && isset($departmentId)) {
-      $this->id = $id;
-      $this->firstName = $firstName;
-      $this->lastName = $lastName;
-      $this->departmentId = $departmentId;
-    }
-  }
-
   /**
    * @return array
    * @throws Exception
@@ -94,8 +72,8 @@ class EmployeeDb implements Saveable
     public function createNewObject(string $firstName, string $lastName, int $departmentId): EmployeeDb
   {
     try {
-      $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, :firstName, :lastName, :departmentId)";
       $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, :firstName, :lastName, :departmentId)";
       $stmt = $dbh->prepare($sql);
       $stmt->bindParam('firstName', $firstName, PDO::PARAM_STR);
       $stmt->bindParam('lastName', $lastName, PDO::PARAM_STR);
@@ -151,44 +129,5 @@ class EmployeeDb implements Saveable
     } catch (PDOException $e) {
       throw new Exception($e->getMessage());
     }
-  }
-
-  /**
-   * @return int
-   */
-  public
-  function getId(): int
-  {
-    return $this->id;
-  }
-
-  /**
-   * @return string
-   */
-  public function getFirstName(): string
-  {
-    return $this->firstName;
-  }
-
-  /**
-   * @return string
-   */
-  public function getLastName(): string
-  {
-    return $this->lastName;
-  }
-
-  /**
-   * @return int
-   */
-  public function getDepartmentId(): int
-  {
-    return $this->departmentId;
-  }
-
-
-  public function getDepartmentName(): string
-  {
-    return ((new Department())->getObjectById($this->departmentId))->getName();
   }
 }
