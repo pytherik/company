@@ -6,13 +6,8 @@ spl_autoload_register(function ($class) {
   include 'classes/' . $class . '.php';
 });
 
-if (PERSISTENCY === 'file') {
-  $EmployeeClass = 'EmployeeFile';
-  $DepartmentClass = 'DepartmentFile';
-} else {
-  $EmployeeClass = 'EmployeeDb';
-  $DepartmentClass = 'DepartmentDb';
-}
+$EmployeeClass = (PERSISTENCY === 'file') ? 'EmployeeFile' : 'EmployeeDb';
+$DepartmentClass = (PERSISTENCY === 'file') ? 'DepartmentFile' : 'DepartmentDb';
 
 $action = $_REQUEST['action'] ?? 'showList';
 $area = $_REQUEST['area'] ?? 'employee';
