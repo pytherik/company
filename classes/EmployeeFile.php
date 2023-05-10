@@ -1,6 +1,6 @@
 <?php
 
-class Employee implements Saveable
+class EmployeeFile implements Saveable
 {
   private int $id;
   private string $firstName;
@@ -30,7 +30,6 @@ class Employee implements Saveable
    */
   public function getAllAsObjects(): array
   {
-    if (PERSISTENCY === 'file') {
       try {
 
         if (!is_file(CSV_PATH_EMPLOYEE)) {
@@ -39,39 +38,24 @@ class Employee implements Saveable
         $handle = fopen(CSV_PATH_EMPLOYEE, 'r');
         $employees = [];
         while ($content = fgetcsv($handle)) {
-          $employees[] = new Employee($content[0], $content[1], $content[2], $content[3]);
+          $employees[] = new EmployeeFile($content[0], $content[1], $content[2], $content[3]);
         }
         fclose($handle);
       } catch (Error $e) {
         //todo style error.php
         throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
       }
-    } else {
-      try {
-        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
-        $sql = 'SELECT * from employee';
-        $result = $dbh->query($sql);
-        $employees = [];
-        while ($row = $result->fetchObject(__CLASS__)) {
-          $employees[] = $row;
-        }
-        $dbh = null;
-      } catch (PDOException $e) {
-        throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
-      }
-    }
     return $employees;
   }
 
   /**
    * @param int $id
-   * @return Employee|false
+   * @return EmployeeFile|false
    * @throws Exception
    */
-  public function getObjectById(int $id): Employee|false
+  public function getObjectById(int $id): EmployeeFile|false
   {
-    if (PERSISTENCY === 'file') {
-      $employee = new Employee();
+      $employee = new EmployeeFile();
       $employees = $this->getAllAsObjects();
       foreach ($employees as $e) {
         if ($id === $e->getId()) {
@@ -79,87 +63,31 @@ class Employee implements Saveable
         }
       }
       return $employee;
-    } else {
-      try {
-        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
-        //info Version bisher
-        /*
-         * $sql = "SELECT * from employee WHERE id = :id";
-         * $result = $dbh->query($sql);
-         * $employee = $result-fetch_object(__CLASS__);
-        */
-        //info Version mit prepared Statement
-
-        //info nur variable Werte werden mit :... gekennzeichnet
-        $sql = "SELECT * from employee WHERE id = :id";
-
-        //info sql wird an die SQL-Datenbank geschickt und es wird eine Syntaxprüfung durchgeführt
-        $stmt = $dbh->prepare($sql);
-
-        //info die Werte für die Platzhalter :... werden auf Datentyp überprüft und dann in das sql-Statement eingesetzt
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-        //info das vollständige Statement wird in der Datenbank ausgeführt
-        $stmt->execute();
-
-        //info die zurückgegebenen Daten werden ausgelesen
-        $employee = $stmt->fetchObject(__CLASS__);
-
-        $dbh = null;
-      } catch (PDOException $e) {
-        throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
-      }
-    }
-    return $employee;
   }
 
   /**
    * @param string $firstName
    * @param string $lastName
    * @param int $departmentId
-   * @return Employee
+   * @return EmployeeFile
    * @throws Exception
    */
-  public function createNewObject(string $firstName, string $lastName, int $departmentId): Employee
+  public function createNewObject(string $firstName, string $lastName, int $departmentId): EmployeeFile
   {
-    if (PERSISTENCY === 'file') {
       if (!is_file(CSV_PATH_EMPLOYEE_ID_COUNTER)) {
         file_put_contents(CSV_PATH_EMPLOYEE_ID_COUNTER, 1);
       }
       // nächste freie id auslesen
       $id = file_get_contents(CSV_PATH_EMPLOYEE_ID_COUNTER);
 
-      $employee = new Employee($id, $firstName, $lastName, $departmentId);
+      $employee = new EmployeeFile($id, $firstName, $lastName, $departmentId);
       $employees = $this->getAllAsObjects();
       $employees[] = $employee; // neuen employee zu Liste ($employees) hinzufügen
       $this->storeInFile($employees);
 
       file_put_contents(CSV_PATH_EMPLOYEE_ID_COUNTER, $id + 1);
-      return $employee;
-    } else {
-      try {
-        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
-        $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, :firstName, :lastName, :departmentId)";
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindParam('firstName', $firstName, PDO::PARAM_STR);
-        $stmt->bindParam('lastName', $lastName, PDO::PARAM_STR);
-        $stmt->bindParam('departmentId', $departmentId, PDO::PARAM_INT);
-        $stmt->execute();
-        //alt $stmt->execute(
-        //alt [':firstName' => $firstName,
-        // ':lastName' => $lastName,
-        // ':departmentId' => $departmentId]
-        //bzw
-        //bzw $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, ?, ?, ?)";
-        // $stmt->execute($firstName, $lastName, $departmetId);
-        $id = $dbh->lastInsertId();
-        $dbh = null;
-      } catch (PDOException $e) {
-        throw new Exception($e->getMessage());
-      }
-      return new Employee($id, $firstName, $lastName, $departmentId);
+      return new EmployeeFile($id, $firstName, $lastName, $departmentId);
     }
-  }
 
   /**
    * @return void
@@ -167,7 +95,6 @@ class Employee implements Saveable
    */
   public function updateObject(): void
   {
-    if (PERSISTENCY === 'file') {
       try {
         $employees = $this->getAllAsObjects();
         foreach ($employees as $key => $employee) {
@@ -180,25 +107,6 @@ class Employee implements Saveable
       } catch (Error $e) {
         throw new Exception('Fehler in store(): ' . $e->getMessage());
       }
-    } else {
-      try {
-        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
-        $sql = "UPDATE employee SET 
-                    firstName = :firstName,
-                    lastName = :lastName, 
-                    departmentId = :departmentId 
-                WHERE id = :id";
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindParam('firstName', $this->firstName, PDO::PARAM_STR);
-        $stmt->bindParam('lastName', $this->lastName, PDO::PARAM_STR);
-        $stmt->bindParam('departmentId', $this->departmentId, PDO::PARAM_INT);
-        $stmt->bindParam('id', $this->id, PDO::PARAM_INT);
-        $stmt->execute();
-        $dbh = null;
-      } catch (PDOException $e) {
-        throw new Exception($e->getMessage());
-      }
-    }
   }
 
   /**

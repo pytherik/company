@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-//notice lädt Klassen, die benötigt werden automatisch aus dem Ordner classes nach
+//info lädt Klassen, die benötigt werden automatisch aus dem Ordner classes nach
 spl_autoload_register(function ($class) {
   include 'classes/' . $class . '.php';
 });
@@ -22,7 +22,7 @@ try {
     case 'showList':
       if ($area === 'employee') {
         if (PERSISTENCY === 'file') {
-          $employees = (new Employee())->getAllAsObjects();
+          $employees = (new EmployeeFile())->getAllAsObjects();
         } else {
           $employees = (new EmployeeDb())->getAllAsObjects();
         }
@@ -35,7 +35,7 @@ try {
     case 'showUpdate':
       if ($area === 'employee') {
         if (PERSISTENCY === 'file') {
-          $employee = (new Employee())->getObjectById($id);
+          $employee = (new EmployeeFile())->getObjectById($id);
         } else {
           $employee = (new EmployeeDb())->getObjectById($id);
         }
@@ -56,8 +56,8 @@ try {
     case 'delete':
       if ($area === 'employee') {
         if (PERSISTENCY === 'file') {
-          (new Employee())->delete($id);
-          $employees = (new Employee())->getAllAsObjects();
+          (new EmployeeFile())->delete($id);
+          $employees = (new EmployeeFile())->getAllAsObjects();
         } else {
           (new EmployeeDb())->delete($id);
           $employees = (new EmployeeDb())->getAllAsObjects();
@@ -71,9 +71,9 @@ try {
     case 'update':
       if ($area === 'employee') {
         if (PERSISTENCY === 'file') {
-          $employee = new Employee($id, $firstName, $lastName, $departmentId);
+          $employee = new EmployeeFile($id, $firstName, $lastName, $departmentId);
           $employee->updateObject();
-          $employees = (new Employee())->getAllAsObjects();
+          $employees = (new EmployeeFile())->getAllAsObjects();
         } else {
           $employee = new EmployeeDb($id, $firstName, $lastName, $departmentId);
           $employee->updateObject();
@@ -89,7 +89,7 @@ try {
     case 'create':
       if ($area === 'employee') {
         if (PERSISTENCY === 'file') {
-          (new Employee())->createNewObject($firstName, $lastName, $departmentId);
+          (new EmployeeFile())->createNewObject($firstName, $lastName, $departmentId);
         } else {
           (new EmployeeDb())->createNewObject($firstName, $lastName, $departmentId);
         }
@@ -100,7 +100,7 @@ try {
       // falls unerwarteter Wert für $action übergeben wird
       if ($area === 'employee') {
         if (PERSISTENCY === 'file') {
-          $employees = (new Employee())->getAllAsObjects();
+          $employees = (new EmployeeFile())->getAllAsObjects();
         } else {
           $employees = (new EmployeeDb())->getAllAsObjects();
         }
