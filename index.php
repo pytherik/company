@@ -4,6 +4,7 @@ include 'config.php';
 //info lädt Klassen, die benötigt werden automatisch aus dem Ordner classes nach
 spl_autoload_register(function ($class) {
   include 'classes/' . $class . '.php';
+  echo 'views/'.$class.'<br/>';
 });
 
 $EmployeeClass = (PERSISTENCY === 'file') ? 'EmployeeFile' : 'EmployeeDb';
