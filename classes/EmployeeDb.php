@@ -3,10 +3,10 @@
 class EmployeeDb extends Employee
 {
   /**
-   * @return array
+   * @return EmployeeDb[]
    * @throws Exception
    */
-  public function getAllAsObjects(): array
+  public function getAllAsObjects(): array|null
   {
     try {
       $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);

@@ -116,7 +116,3 @@ try {
 }
 
 include sprintf("views/%s.php", $view . ucfirst($area));
-
-//echo "<pre>";
-//print_r($_REQUEST);
-//echo "</pre>";

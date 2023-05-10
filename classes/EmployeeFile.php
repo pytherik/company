@@ -1,34 +1,12 @@
 <?php
 
-class EmployeeFile implements Saveable
+class EmployeeFile extends Employee
 {
-  private int $id;
-  private string $firstName;
-  private string $lastName;
-  private int $departmentId;
-
   /**
-   * @param int|null $id
-   * @param string|null $firstName
-   * @param string|null $lastName
-   * @param int|null $departmentId
-   */
-  public function __construct(?int    $id = null, ?string $firstName = null,
-                              ?string $lastName = null, ?int $departmentId = null)
-  {
-    if (isset($id) && isset($firstName) && isset($lastName) && isset($departmentId)) {
-      $this->id = $id;
-      $this->firstName = $firstName;
-      $this->lastName = $lastName;
-      $this->departmentId = $departmentId;
-    }
-  }
-
-  /**
-   * @return array
+   * @return EmployeeFile[]
    * @throws Exception
    */
-  public function getAllAsObjects(): array
+  public function getAllAsObjects(): array|null
   {
       try {
 
@@ -136,7 +114,6 @@ class EmployeeFile implements Saveable
    */
   public function delete(int $id): void
   {
-    if (PERSISTENCY === 'file') {
       $employees = $this->getAllAsObjects();
       foreach ($employees as $key => $employee) {
         if ($employee->getId() === $id) {
@@ -145,65 +122,5 @@ class EmployeeFile implements Saveable
         }
       }
       $this->storeInFile($employees);
-    } else {
-      try {
-        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
-        $sql = "DELETE FROM employee WHERE id = :id";
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindParam('id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $dbh = null;
-      } catch (PDOException $e) {
-        throw new Exception($e->getMessage());
-      }
-    }
-  }
-
-  /**
-   * @return int
-   */
-  public
-  function getId(): int
-  {
-    return $this->id;
-  }
-
-  /**
-   * @return string
-   */
-  public function getFirstName(): string
-  {
-    return $this->firstName;
-  }
-
-  /**
-   * @return string
-   */
-  public function getLastName(): string
-  {
-    return $this->lastName;
-  }
-
-  /**
-   * @return int
-   */
-  public function getDepartmentId(): int
-  {
-    return $this->departmentId;
-  }
-
-
-  public function getDepartmentName(): string
-  {
-//    $departments = (new Department())->getAllAsObjects();
-//    foreach ($departments as $department) {
-//      if ($this->getDepartmentId() === $department->getId()) {
-//        return $department->getName();
-//      } else {
-//        continue;
-//      }
-//    }
-//    return 'NULL';
-    return ((new Department())->getObjectById($this->departmentId))->getName();
   }
 }
