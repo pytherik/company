@@ -139,12 +139,18 @@ class Employee implements Saveable
         } else {
             try{
             $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
-            $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, :firstName, :lastName, :departmentId)";
             $stmt = $dbh->prepare($sql);
             $stmt->bindParam('firstName', $firstName, PDO::PARAM_STR);
             $stmt->bindParam('lastName', $lastName, PDO::PARAM_STR);
             $stmt->bindParam('departmentId', $departmentId, PDO::PARAM_INT);
             $stmt->execute();
+            //alt $stmt->execute(
+              //alt [':firstName' => $firstName,
+              // ':lastName' => $lastName,
+              // ':departmentId' => $departmentId]
+              //bzw
+              //bzw $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, ?, ?, ?)";
+              // $stmt->execute($firstName, $lastName, $departmetId);
             $id = $dbh->lastInsertId();
             $dbh = null;
             } catch(PDOException $e) {
