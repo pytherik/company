@@ -130,4 +130,9 @@ class EmployeeDb extends Employee
       throw new Exception($e->getMessage());
     }
   }
+  public function getDepartmentName(): string
+  {
+    return ((new DepartmentDb())->getObjectById($this->departmentId))->getName();
+  }
+
 }

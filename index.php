@@ -27,8 +27,12 @@ try {
           $employees = (new EmployeeDb())->getAllAsObjects();
         }
       } else if ($area === 'department') {
-        $departments = (new Department())->getAllAsObjects();
-//        $departments = (new Department())->getFromDatabase();
+        if (PERSISTENCY === 'file') {
+          $departments = (new DepartmentFile())->getAllAsObjects();
+        } else {
+          $departments = (new DepartmentDb())->getAllAsObjects();
+        }
+//        $departments = (new DepartmentFile())->getFromDatabase();
       }
       $view = $action;
       break;
@@ -39,16 +43,28 @@ try {
         } else {
           $employee = (new EmployeeDb())->getObjectById($id);
         }
-        $departments = (new Department())->getAllAsObjects();
+        if (PERSISTENCY === 'file') {
+          $departments = (new DepartmentFile())->getAllAsObjects();
+        } else {
+          $departments = (new DepartmentDb())->getAllAsObjects();
+        }
       } else if ($area === 'department') {
-        $department = (new Department())->getObjectById($id);
+        if (PERSISTENCY === 'file') {
+          $department = (new DepartmentFile())->getObjectById($id);
+        } else {
+          $department = (new DepartmentDb())->getObjectById($id);
+        }
       }
       $activity = 'bearbeiten';
       $view = 'showUpdateAndCreate';
       break;
     case 'showCreate':
       if ($area === 'employee') {
-        $departments = (new Department())->getAllAsObjects();
+        if (PERSISTENCY === 'file') {
+          $departments = (new DepartmentFile())->getAllAsObjects();
+        } else {
+          $departments = (new DepartmentDb())->getAllAsObjects();
+        }
       }
       $activity = 'erstellen';
       $view = 'showUpdateAndCreate';
@@ -63,8 +79,13 @@ try {
           $employees = (new EmployeeDb())->getAllAsObjects();
         }
       } else if ($area === 'department') {
-        (new Department())->delete($id);
-        $departments = (new Department())->getAllAsObjects();
+        if (PERSISTENCY === 'file') {
+          (new DepartmentFile())->delete($id);
+          $departments = (new DepartmentFile())->getAllAsObjects();
+        } else {
+          (new DepartmentDb())->delete($id);
+          $departments = (new DepartmentDb())->getAllAsObjects();
+        }
       }
       $view = 'showList';
       break;
@@ -80,9 +101,15 @@ try {
           $employees = (new EmployeeDb())->getAllAsObjects();
         }
       } else if ($area === 'department') {
-        $department = new Department($id, $departmentName);
-        $department->updateObject();
-        $departments = (new Department())->getAllAsObjects();
+        if (PERSISTENCY === 'file') {
+          $department = new DepartmentFile($id, $departmentName);
+          $department->updateObject();
+          $departments = (new DepartmentFile())->getAllAsObjects();
+        } else {
+          $department = new DepartmentDb($id, $departmentName);
+          $department->updateObject();
+          $departments = (new DepartmentDb())->getAllAsObjects();
+        }
       }
       $view = 'showList';
       break;
@@ -94,7 +121,11 @@ try {
           (new EmployeeDb())->createNewObject($firstName, $lastName, $departmentId);
         }
       } else if ($area === 'department') {
-        (new Department())->createNewObject($departmentName);
+        if (PERSISTENCY === 'file') {
+          (new DepartmentFile())->createNewObject($departmentName);
+        } else {
+          (new DepartmentDb())->createNewObject($departmentName);
+        }
       }
     default:
       // falls unerwarteter Wert für $action übergeben wird
@@ -105,7 +136,11 @@ try {
           $employees = (new EmployeeDb())->getAllAsObjects();
         }
       } else if ($area === 'department') {
-        $departments = (new Department())->getAllAsObjects();
+        if (PERSISTENCY === 'file') {
+          $departments = (new DepartmentFile())->getAllAsObjects();
+        } else {
+          $departments = (new DepartmentDb())->getAllAsObjects();
+        }
       }
       $view = 'showList';
       break;

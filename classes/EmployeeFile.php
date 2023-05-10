@@ -123,4 +123,9 @@ class EmployeeFile extends Employee
       }
       $this->storeInFile($employees);
   }
+  public function getDepartmentName(): string
+  {
+    return ((new DepartmentFile())->getObjectById($this->departmentId))->getName();
+  }
+
 }
