@@ -27,8 +27,8 @@
       ?>
       <div class="row">
         <!--          <div class="cell" data-title="id">--><?php //echo $emp->getId() ?><!--</div>-->
-        <div class="cell" data-title="vorname"><?php echo $emp->getFirstname() ?></div>
-        <div class="cell" data-title="nachname"><?php echo $emp->getLastname() ?></div>
+        <div class="cell" data-title="vorname"><?php echo $emp->getFirstName() ?></div>
+        <div class="cell" data-title="nachname"><?php echo $emp->getLastName() ?></div>
         <div class="cell" data-title="abteilungId"><?php echo $emp->getDepartmentName() ?></div>
         <div class="cell center" data-title="löschen">
           <a href="index.php?id=<?php echo $emp->getId() ?>&action=delete&area=employee">

@@ -8,6 +8,7 @@
   <title>Fehlermeldungen</title>
 </head>
 <body>
+<h1>E R R O R</h1>
 <?php
 echo $e->getMessage()."<br/>";
 echo "<pre>";
