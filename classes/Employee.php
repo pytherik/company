@@ -25,6 +25,15 @@ abstract class Employee implements Saveable
   }
 
   /**
+   * @param string $firstName
+   * @param string $lastName
+   * @param int $departmentId
+   * @return object
+   */
+  abstract public function createNewObject(string $firstName, string $lastName, int $departmentId): object;
+
+
+  /**
    * @return int
    */
   public
