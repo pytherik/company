@@ -19,7 +19,7 @@
         <!--        <div class="cell">ID</div>-->
         <div class="cell">Vorname</div>
         <div class="cell">Nachname</div>
-        <div class="cell">Abteilung ID</div>
+        <div class="cell">Abteilung</div>
         <div class="cell center">save</div>
         <div class="cell center">reset</div>
       </div>

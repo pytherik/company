@@ -15,7 +15,7 @@
   <?php include 'views/navigation.php' ?>
   <div class="table">
     <div class="row blue">
-      <div class="cell">ID</div>
+<!--      <div class="cell">ID</div>-->
       <div class="cell">Abteilung</div>
       <div class="cell center">Löschen</div>
       <div class="cell center">Ändern</div>
@@ -25,7 +25,7 @@
     foreach ($departments as $dep) { ?>
       <div class="row">
         <!--          <div class="cell" data-title="id">--><?php //echo $emp->getId() ?><!--</div>-->
-        <div class="cell" data-title="Id"><?php echo $dep->getId() ?></div>
+<!--        <div class="cell" data-title="Id">--><?php //echo $dep->getId() ?><!--</div>-->
         <div class="cell" data-title="name"><?php echo $dep->getName() ?></div>
         <div class="cell center" data-title="löschen">
           <a href="index.php?id=<?php echo $dep->getId() ?>&action=delete&area=department">

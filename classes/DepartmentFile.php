@@ -69,13 +69,20 @@ class DepartmentFile extends Department
   public function delete(int $id): void
   {
       $departments = $this->getAllAsObjects();
+      $employees = (new EmployeeFile())->getAllAsObjects();
       foreach ($departments as $key => $department) {
         if ($department->getId() === $id) {
           unset($departments[$key]);
+          foreach ($employees as $ekey => $employee) {
+            if ($employee->getDepartmentId() === $id){
+              unset($employees[$ekey]);
+            }
+          }
           break;
         }
       }
       $this->storeInFile($departments);
+      (new EmployeeFile())->storeInFile($employees);
   }
 
   /**

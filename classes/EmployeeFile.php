@@ -92,7 +92,7 @@ class EmployeeFile extends Employee
    * @return void
    * @throws Exception
    */
-  private function storeInFile(array $employees): void
+  public function storeInFile(array $employees): void
   {
     try {
       unlink(CSV_PATH_EMPLOYEE);
