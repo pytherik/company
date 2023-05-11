@@ -23,6 +23,11 @@ class EmployeeDb extends Employee
     return $employees;
   }
 
+  /**
+   * @param $department
+   * @return array|null
+   * @throws Exception
+   */
   public function getAllEmployeesByDepartment($department) :array|null
   {
     try{

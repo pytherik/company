@@ -1,11 +1,12 @@
 <?php
 include 'config.php';
 
-//info lädt Klassen, die benötigt werden automatisch aus dem Ordner classes nach
+//info lädt Klassen, die benötigt werden automatisch nach
 spl_autoload_register(function ($class) {
   include 'classes/' . $class . '.php';
 });
 
+//info Auslagern der PERSISTENCY Fallunterscheidung aus switch case
 $EmployeeClass = (PERSISTENCY === 'file') ? 'EmployeeFile' : 'EmployeeDb';
 $DepartmentClass = (PERSISTENCY === 'file') ? 'DepartmentFile' : 'DepartmentDb';
 
@@ -34,12 +35,13 @@ try {
       }
       $view->setAction($action);
       break;
+      //todo Funktioniert nur in Db-Version
     case 'showAllEmployees':
       $department = (new $DepartmentClass())->getObjectById($id);
       $employees = (new $EmployeeClass())->getAllEmployeesByDepartment($department);
       $view->setAction('showList');
       $abteilung = $department->getName();
-      $view->setHeading("Abteilung $abteilung");
+      $view->setHeading("Mitarbeiter $abteilung");
       break;
     case 'showUpdate':
       if ($area === 'employee') {
