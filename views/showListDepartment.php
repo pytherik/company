@@ -29,17 +29,17 @@
         <div class="cell" data-title="name"><?php echo $dep->getName() ?></div>
         <div class="cell center" data-title="löschen">
           <a href="index.php?id=<?php echo $dep->getId() ?>&action=delete&area=department">
-            <button class="delete">&#10006;</button>
+            <button class="delete symbol">&#10006;</button>
           </a>
         </div>
         <div class="cell center" data-title="ändern">
           <a href="index.php?id=<?php echo $dep->getId() ?>&action=showUpdate&area=department">
-            <button>&#10000;</button>
+            <button class="symbol">&#10000;</button>
           </a>
         </div>
         <div class="cell center">
           <a href="index.php?id=<?php echo $dep->getId() ?>&action=showAllEmployees&area=employee">
-            <button>&#9776;</button>
+            <button class="symbol">&#9776;</button>
           </a>
         </div>
       </div>

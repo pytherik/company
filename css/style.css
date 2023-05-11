@@ -14,6 +14,7 @@ nav {
 }
 
 .btn {
+    font-size: 1.2rem;
     cursor: pointer;
     width: 150px;
     padding: .2rem 0;
@@ -39,6 +40,14 @@ nav {
     background-color: #27ae6099;
 }
 
+input[type="text"],
+select {
+    font-size: 1.3rem;
+}
+
+.symbol {
+    font-size: 1.2rem;
+}
 button:hover,
 input[type="submit"]:hover {
     cursor: pointer;

@@ -43,10 +43,10 @@
         <div class="cell"></div>
         <div class="cell"></div>
         <div class="cell">
-          <input class="save center" type="submit" value=&#10004;>
+          <input class="save center symbol" type="submit" value=&#10004;>
         </div>
         <div>&nbsp;&nbsp;
-          <input class="reset center" type="reset" value=&olarr;>
+          <input class="reset center symbol" type="reset" value=&olarr;>
         </div>
       </div>
     </div>

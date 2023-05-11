@@ -32,12 +32,12 @@
         <div class="cell" data-title="abteilungId"><?php echo $emp->getDepartmentName() ?></div>
         <div class="cell center" data-title="löschen">
           <a href="index.php?id=<?php echo $emp->getId() ?>&action=delete&area=employee">
-            <button class="delete">&#10006;</button>
+            <button class="delete symbol">&#10006;</button>
           </a>
         </div>
         <div class="cell center" data-title="ändern">
           <a href="index.php?id=<?php echo $emp->getId() ?>&action=showUpdate&area=employee">
-            <button>&#10000;</button>
+            <button class="symbol">&#10000;</button>
           </a>
         </div>
       </div>

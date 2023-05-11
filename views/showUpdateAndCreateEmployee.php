@@ -38,12 +38,12 @@
         <div class="cell">
           <input type="text" name="firstName"
                  value="<?php if (isset($employee)) echo $employee->getFirstname() ?>"
-                 size="18" autocomplete="off" autofocus required>
+                 size="16" autocomplete="off" autofocus required>
         </div>
         <div class="cell">
           <input type="text" name="lastName"
                  value="<?php if (isset($employee)) echo $employee->getLastname() ?>"
-                 size="18" autocomplete="off" required>
+                 size="16" autocomplete="off" required>
         </div>
         <div class="cell">
 
@@ -53,10 +53,10 @@
           ?>
         </div>
         <div class="cell center">
-          <input class="save" type="submit" value=&#10004;>
+          <input class="save symbol" type="submit" value=&#10004;>
         </div>
         <div class="cell center">&nbsp;&nbsp;
-          <input class="reset" type="reset" value=&olarr;>
+          <input class="reset symbol" type="reset" value=&olarr;>
         </div>
       </div>
     </div>
