@@ -3,7 +3,7 @@
 class EmployeeFile extends Employee
 {
   /**
-   * @return EmployeeFile[]
+   * @return EmployeeFile[]|null
    * @throws Exception
    */
   public function getAllAsObjects(): array|null
@@ -114,6 +114,7 @@ class EmployeeFile extends Employee
    */
   public function delete(int $id): void
   {
+    try {
       $employees = $this->getAllAsObjects();
       foreach ($employees as $key => $employee) {
         if ($employee->getId() === $id) {
@@ -122,7 +123,11 @@ class EmployeeFile extends Employee
         }
       }
       $this->storeInFile($employees);
+    } catch (Error $e) {
+      throw new Exception('Fehler in delete: ' . $e->getMessage());
   }
+  }
+
   public function getDepartmentName(): string
   {
     return ((new DepartmentFile())->getObjectById($this->departmentId))->getName();

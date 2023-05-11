@@ -4,7 +4,7 @@ class DepartmentFile extends Department
 {
   /**
    * @param int $id
-   * @return Department
+   * @return DepartmentFile
    */
   public function getObjectById(int $id): DepartmentFile
   {
@@ -44,7 +44,7 @@ class DepartmentFile extends Department
 
   /**
    * @param string $name
-   * @return Department
+   * @return DepartmentFile
    */
   public function createNewObject(string $name): DepartmentFile
   {
@@ -65,9 +65,11 @@ class DepartmentFile extends Department
   /**
    * @param int $id
    * @return void
+   * @throws Exception
    */
   public function delete(int $id): void
   {
+    try {
       $departments = $this->getAllAsObjects();
       $employees = (new EmployeeFile())->getAllAsObjects();
       foreach ($departments as $key => $department) {
@@ -83,10 +85,14 @@ class DepartmentFile extends Department
       }
       $this->storeInFile($departments);
       (new EmployeeFile())->storeInFile($employees);
+    } catch (Error $e) {
+      throw new Exception('Fehler in delete: ' . $e->getMessage());
+    }
   }
 
   /**
    * @return void
+   * @throws Exception
    */
   public function updateObject(): void
   {
