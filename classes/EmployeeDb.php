@@ -23,6 +23,25 @@ class EmployeeDb extends Employee
     return $employees;
   }
 
+  public function getAllEmployeesByDepartment($department) :array|null
+  {
+    try{
+      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $sql = "SELECT * from employee WHERE departmentId = :departmentId";
+      $stmt = $dbh->prepare($sql);
+      $id = $department->getId();
+      $stmt->bindParam('departmentId', $id);
+      $stmt->execute();
+      $employees = [];
+      while ($row = $stmt->fetchObject(__CLASS__)){
+        $employees[] = $row;
+      }
+    } catch (PDOException $e) {
+      throw new Exception($e->getMessage());
+    }
+    return $employees;
+  }
+
   /**
    * @param int $id
    * @return EmployeeDb|false

@@ -30,6 +30,11 @@ try {
       }
       $view = $action;
       break;
+    case 'showAllEmployees':
+      $department = (new $DepartmentClass())->getObjectById($id);
+      $employees = (new $EmployeeClass())->getAllEmployeesByDepartment($department);
+      $view = 'showList';
+      break;
     case 'showUpdate':
       if ($area === 'employee') {
           $employee = (new $EmployeeClass())->getObjectById($id);

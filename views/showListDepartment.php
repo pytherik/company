@@ -37,6 +37,11 @@
             <button>&#10000;</button>
           </a>
         </div>
+        <div class="cell center">
+          <a href="index.php?id=<?php echo $dep->getId() ?>&action=showAllEmployees&area=employee">
+            <button>Ma aus Abt.</button>
+          </a>
+        </div>
       </div>
       <?php } ?>
   </div>
