@@ -11,15 +11,15 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1 class="heading">Alle Abteilungen</h1>
+  <h1 class="heading"><?= $view->getHeading() ?></h1>
   <?php include 'views/navigation.php' ?>
   <div class="table">
     <div class="row blue">
-      <!--        <div class="cell">ID</div>-->
       <div class="cell">ID</div>
       <div class="cell">Abteilung</div>
       <div class="cell center">Löschen</div>
       <div class="cell center">Ändern</div>
+      <div class="cell">Liste MA</div>
     </div>
     <?php
     foreach ($departments as $dep) { ?>
@@ -39,11 +39,11 @@
         </div>
         <div class="cell center">
           <a href="index.php?id=<?php echo $dep->getId() ?>&action=showAllEmployees&area=employee">
-            <button>Ma aus Abt.</button>
+            <button>&#9776;</button>
           </a>
         </div>
       </div>
-      <?php } ?>
+    <?php } ?>
   </div>
 </body>
 </html>

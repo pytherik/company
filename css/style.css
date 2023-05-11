@@ -66,6 +66,12 @@ input[type="submit"]:hover {
     font-size: 1rem;
     border-radius: .2rem;
 }
+
+.error {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
 .header .cell,
 .green .cell,
 .blue .cell {

@@ -7,11 +7,11 @@
         initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/style.css">
-  <title><?= ucfirst($activity) ?></title>
+  <title><?= $view->getHeading() ?></title>
 </head>
 <body>
 <div class="wrapper">
-  <h1>Abteilung <?= $activity ?></h1>
+  <h1 class="heading"><?= $view->getHeading() ?></h1>
   <?php include 'views/navigation.php' ?>
   <form action="index.php" method="post">
     <div class="table">
