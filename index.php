@@ -6,7 +6,6 @@ spl_autoload_register(function ($class) {
   include 'classes/' . $class . '.php';
 });
 
-
 //info Auslagern der PERSISTENCY Fallunterscheidung aus switch case
 $EmployeeClass = (PERSISTENCY === 'file') ? 'EmployeeFile' : 'EmployeeDb';
 $DepartmentClass = (PERSISTENCY === 'file') ? 'DepartmentFile' : 'DepartmentDb';
@@ -38,7 +37,8 @@ try {
       break;
     case 'showAllEmployees':
       $department = (new $DepartmentClass())->getObjectById($id);
-      $employees = (new $EmployeeClass())->getAllEmployeesByDepartment($department);
+      $department->buildEmployees();
+      $employees = $department->getEmployees();
       $view->setAction('showList');
       $abteilung = $department->getName();
       $view->setHeading("Mitarbeiter $abteilung");

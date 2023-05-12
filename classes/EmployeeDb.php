@@ -3,10 +3,16 @@
 class EmployeeDb extends Employee
 {
   /**
-   * @return EmployeeDb[]
+   * @var Employee[]
+   */
+  private array $employees;
+
+  /**
+   * @param DepartmentDb|null $department
+   * @return array|null
    * @throws Exception
    */
-  public function getAllAsObjects(Department $department = null): array|null
+  public function getAllAsObjects(DepartmentDb $department = null): array|null
   {
     try {
       $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
@@ -33,11 +39,11 @@ class EmployeeDb extends Employee
   }
 
   /**
-   * @param $department
+   * @param DepartmentDb $department
    * @return array|null
    * @throws Exception
    */
-  public function getAllEmployeesByDepartment($department): array|null
+  public function getAllEmployeesByDepartment(DepartmentDb $department): array|null
   {
     return $this->getAllAsObjects($department);
   }

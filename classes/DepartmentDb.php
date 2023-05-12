@@ -3,6 +3,24 @@
 class DepartmentDb extends Department
 {
   /**
+   * @var Employee[]
+   */
+  private array $employees;
+
+  /**
+   * @return array
+   */
+  public function getEmployees(): array
+  {
+    return $this->employees;
+  }
+
+  public function buildEmployees(): void
+  {
+    $this->employees = (new EmployeeDb())->getAllEmployeesByDepartment($this);
+  }
+
+  /**
    * @param int $id
    * @return DepartmentDb
    */
@@ -110,5 +128,4 @@ class DepartmentDb extends Department
       throw new Exception($e->getMessage());
     }
   }
-
 }
