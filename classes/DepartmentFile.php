@@ -62,6 +62,34 @@ class DepartmentFile extends Department
     return $department;
   }
 
+//  /**
+//   * @param int $id
+//   * @return void
+//   * @throws Exception
+//   */
+//  public function delete(int $id): void
+//  {
+//    try {
+//      $departments = $this->getAllAsObjects();
+//      $employees = (new EmployeeFile())->getAllAsObjects();
+//      foreach ($departments as $key => $department) {
+//        if ($department->getId() === $id) {
+//          unset($departments[$key]);
+//          foreach ($employees as $ekey => $employee) {
+//            if ($employee->getDepartmentId() === $id){
+//              unset($employees[$ekey]);
+//            }
+//          }
+//          break;
+//        }
+//      }
+//      $this->storeInFile($departments);
+//      (new EmployeeFile())->storeInFile($employees);
+//    } catch (Error $e) {
+//      throw new Exception('Fehler in delete: ' . $e->getMessage());
+//    }
+//  }
+//
   /**
    * @param int $id
    * @return void
@@ -69,6 +97,8 @@ class DepartmentFile extends Department
    */
   public function delete(int $id): void
   {
+    $employeesLeft = (new EmployeeFile())->getAllEmployeesByDepartment((new DepartmentFile())->getObjectById($id));
+    if (count($employeesLeft) === 0) {
     try {
       $departments = $this->getAllAsObjects();
       $employees = (new EmployeeFile())->getAllAsObjects();
@@ -87,6 +117,7 @@ class DepartmentFile extends Department
       (new EmployeeFile())->storeInFile($employees);
     } catch (Error $e) {
       throw new Exception('Fehler in delete: ' . $e->getMessage());
+    }
     }
   }
 
