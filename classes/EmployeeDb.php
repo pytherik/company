@@ -8,34 +8,26 @@ class EmployeeDb extends Employee
    */
   public function getAllAsObjects(Department $department = null): array|null
   {
-    if (!isset($department)) {
-      try {
-        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+    try {
+      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      if (!isset($department)) {
         $sql = 'SELECT * from employee';
         $result = $dbh->query($sql);
-        $employees = [];
-        while ($row = $result->fetchObject(__CLASS__)) {
-          $employees[] = $row;
-        }
-        $dbh = null;
-      } catch (PDOException $e) {
-        throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
-      }
-    } else {
-      try {
-        $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      } else {
         $sql = "SELECT * from employee WHERE departmentId = :departmentId";
         $stmt = $dbh->prepare($sql);
         $id = $department->getId();
         $stmt->bindParam('departmentId', $id);
         $stmt->execute();
+        $result = $stmt; //info technisch zum Abfragen der while-Schleife
+      }
         $employees = [];
-        while ($row = $stmt->fetchObject(__CLASS__)) {
+        while ($row = $result->fetchObject(__CLASS__)) {
           $employees[] = $row;
         }
-      } catch (PDOException $e) {
-        throw new Exception($e->getMessage());
-      }
+      $dbh = null;
+    } catch (PDOException $e) {
+      throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
     }
     return $employees;
   }
@@ -47,7 +39,7 @@ class EmployeeDb extends Employee
    */
   public function getAllEmployeesByDepartment($department): array|null
   {
-    return $this->getAllEmployeesByDepartment($department);
+    return $this->getAllAsObjects($department);
   }
 
   /**
@@ -102,8 +94,8 @@ class EmployeeDb extends Employee
       $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
       $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, :firstName, :lastName, :departmentId)";
       $stmt = $dbh->prepare($sql);
-      $stmt->bindParam('firstName', $firstName, PDO::PARAM_STR);
-      $stmt->bindParam('lastName', $lastName, PDO::PARAM_STR);
+      $stmt->bindParam('firstName', $firstName);
+      $stmt->bindParam('lastName', $lastName);
       $stmt->bindParam('departmentId', $departmentId, PDO::PARAM_INT);
       $stmt->execute();
       $id = $dbh->lastInsertId();
@@ -128,8 +120,8 @@ class EmployeeDb extends Employee
                     departmentId = :departmentId 
                 WHERE id = :id";
       $stmt = $dbh->prepare($sql);
-      $stmt->bindParam('firstName', $this->firstName, PDO::PARAM_STR);
-      $stmt->bindParam('lastName', $this->lastName, PDO::PARAM_STR);
+      $stmt->bindParam('firstName', $this->firstName);
+      $stmt->bindParam('lastName', $this->lastName);
       $stmt->bindParam('departmentId', $this->departmentId, PDO::PARAM_INT);
       $stmt->bindParam('id', $this->id, PDO::PARAM_INT);
       $stmt->execute();
