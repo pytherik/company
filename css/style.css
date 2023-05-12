@@ -17,9 +17,14 @@ nav {
     font-size: 1.2rem;
     cursor: pointer;
     width: 150px;
-    padding: .2rem 0;
-    margin-bottom: 5px;
+    padding: .4rem .6rem;
     color: #fff;
+}
+
+a {
+    padding: .4rem 0;
+    text-decoration: none;
+    margin-bottom: 10px;
 }
 
 .heading {
@@ -49,6 +54,7 @@ select {
     font-size: 1.2rem;
 }
 
+a:hover,
 button:hover,
 input[type="submit"]:hover {
     cursor: pointer;

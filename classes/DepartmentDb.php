@@ -51,11 +51,12 @@ class DepartmentDb extends Department
     return new DepartmentDb($id, $name);
   }
 
-  /**
-   * @param int $id
-   * @return void
-   * @throws Exception
-   */
+  //info Version lösche Abteilung incl. Mitarbeiter
+//  /**
+//   * @param int $id
+//   * @return void
+//   * @throws Exception
+//   */
 //  public function delete(int $id): void
 //  {
 //    try {
@@ -69,6 +70,7 @@ class DepartmentDb extends Department
 //    }
 //  }
 
+  //info Version lösche Abteilung nur wenn keine Mitarbeiter
   /**
    * @param int $id
    * @return void

@@ -1,14 +1,14 @@
 <nav>
   <a href="index.php?action=showList&area=employee">
-    <button class="btn ma-list">&#9776; Mitarbeiter</button>
+    <span class="btn ma-list">&#9776; Mitarbeiter</span>
   </a>
   <a href="index.php?action=showCreate&area=employee">
-    <button class="btn create">&#43; Mitarbeiter &#43;</button>
+    <span class="btn create">&#43; Mitarbeiter &#43;</span>
   </a>
   <a href="index.php?action=showList&area=department">
-    <button class="btn dp-list">&#9776; Abteilungen</button>
+    <span class="btn dp-list">&#9776; Abteilungen</span>
   </a>
   <a href="index.php?action=showCreate&area=department">
-    <button class="btn create">&#43; Abteilung &#43;</button>
+    <span class="btn create">&#43; Abteilung &#43;</span>
   </a>
 </nav>

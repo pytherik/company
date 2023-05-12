@@ -35,7 +35,6 @@ try {
       }
       $view->setAction($action);
       break;
-      //todo Funktioniert nur in Db-Version
     case 'showAllEmployees':
       $department = (new $DepartmentClass())->getObjectById($id);
       $employees = (new $EmployeeClass())->getAllEmployeesByDepartment($department);

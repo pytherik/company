@@ -8,13 +8,13 @@ class DepartmentFile extends Department
    */
   public function getObjectById(int $id): DepartmentFile
   {
-      $department = new DepartmentFile();
-      $departments = $this->getAllAsObjects();
-      foreach ($departments as $e) {
-        if ($id === $e->getId()) {
-          $department = $e;
-        }
+    $department = new DepartmentFile();
+    $departments = $this->getAllAsObjects();
+    foreach ($departments as $e) {
+      if ($id === $e->getId()) {
+        $department = $e;
       }
+    }
     return $department;
   }
 
@@ -23,22 +23,22 @@ class DepartmentFile extends Department
    */
   public function getAllAsObjects(): array
   {
-      try {
+    try {
 
-        if (!is_file(CSV_PATH_DEPARTMENT)) {
-          fopen(CSV_PATH_DEPARTMENT, 'w');
-        }
-
-        $handle = fopen(CSV_PATH_DEPARTMENT, 'r');
-        $departments = [];
-        while ($content = fgetcsv($handle)) {
-          $departments[] = new DepartmentFile((int)$content[0], $content[1]);
-        }
-        fclose($handle);
-      } catch (Error $e) {
-        // wird im view error.php ausgegeben
-        throw new Error('Etwas ist nicht ok: ' . $e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
+      if (!is_file(CSV_PATH_DEPARTMENT)) {
+        fopen(CSV_PATH_DEPARTMENT, 'w');
       }
+
+      $handle = fopen(CSV_PATH_DEPARTMENT, 'r');
+      $departments = [];
+      while ($content = fgetcsv($handle)) {
+        $departments[] = new DepartmentFile((int)$content[0], $content[1]);
+      }
+      fclose($handle);
+    } catch (Error $e) {
+      // wird im view error.php ausgegeben
+      throw new Error('Etwas ist nicht ok: ' . $e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
+    }
     return $departments;
   }
 
@@ -48,20 +48,21 @@ class DepartmentFile extends Department
    */
   public function createNewObject(string $name): DepartmentFile
   {
-      if (!is_file(CSV_PATH_DEPARTMENT_ID_COUNTER)) {
-        file_put_contents(CSV_PATH_DEPARTMENT_ID_COUNTER, 1);
-      }
-      $id = file_get_contents(CSV_PATH_DEPARTMENT_ID_COUNTER);
+    if (!is_file(CSV_PATH_DEPARTMENT_ID_COUNTER)) {
+      file_put_contents(CSV_PATH_DEPARTMENT_ID_COUNTER, 1);
+    }
+    $id = file_get_contents(CSV_PATH_DEPARTMENT_ID_COUNTER);
 
-      $department = new DepartmentFile($id, $name);
-      $departments = $this->getAllAsObjects();
-      $departments[] = $department;
-      $this->storeInFile($departments);
+    $department = new DepartmentFile($id, $name);
+    $departments = $this->getAllAsObjects();
+    $departments[] = $department;
+    $this->storeInFile($departments);
 
-      file_put_contents(CSV_PATH_DEPARTMENT_ID_COUNTER, $id + 1);
+    file_put_contents(CSV_PATH_DEPARTMENT_ID_COUNTER, $id + 1);
     return $department;
   }
 
+  //info Version lösche Abteilung incl. Mitarbeiter
 //  /**
 //   * @param int $id
 //   * @return void
@@ -90,6 +91,8 @@ class DepartmentFile extends Department
 //    }
 //  }
 //
+
+  //info Version lösche Abteilung nur wenn keine Mitarbeiter
   /**
    * @param int $id
    * @return void
@@ -98,26 +101,20 @@ class DepartmentFile extends Department
   public function delete(int $id): void
   {
     $employeesLeft = (new EmployeeFile())->getAllEmployeesByDepartment((new DepartmentFile())->getObjectById($id));
-    if (count($employeesLeft) === 0) {
-    try {
-      $departments = $this->getAllAsObjects();
-      $employees = (new EmployeeFile())->getAllAsObjects();
-      foreach ($departments as $key => $department) {
-        if ($department->getId() === $id) {
-          unset($departments[$key]);
-          foreach ($employees as $ekey => $employee) {
-            if ($employee->getDepartmentId() === $id){
-              unset($employees[$ekey]);
-            }
+    if (!$employeesLeft) {
+      try {
+        $departments = $this->getAllAsObjects();
+        foreach ($departments as $key => $department) {
+          echo $department->getId() . " : $id" . "<br/>";
+          if ($department->getId() === $id) {
+            unset($departments[$key]);
+            break;
           }
-          break;
         }
+        $this->storeInFile($departments);
+      } catch (Error $e) {
+        throw new Exception('Fehler in delete: ' . $e->getMessage());
       }
-      $this->storeInFile($departments);
-      (new EmployeeFile())->storeInFile($employees);
-    } catch (Error $e) {
-      throw new Exception('Fehler in delete: ' . $e->getMessage());
-    }
     }
   }
 
@@ -127,18 +124,18 @@ class DepartmentFile extends Department
    */
   public function updateObject(): void
   {
-      try {
-        $departments = $this->getAllAsObjects();
-        foreach ($departments as $key => $department) {
-          if ($department->getId() === $this->getId()) {
-            $departments[$key] = $this;
-            break;
-          }
+    try {
+      $departments = $this->getAllAsObjects();
+      foreach ($departments as $key => $department) {
+        if ($department->getId() === $this->getId()) {
+          $departments[$key] = $this;
+          break;
         }
-        $this->storeInFile($departments);
-      } catch (Error $e) {
-        throw new Exception('Fehler in store(): ' . $e->getMessage());
       }
+      $this->storeInFile($departments);
+    } catch (Error $e) {
+      throw new Exception('Fehler in store(): ' . $e->getMessage());
+    }
   }
 
   /**
