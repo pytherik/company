@@ -48,6 +48,7 @@ select {
 .symbol {
     font-size: 1.2rem;
 }
+
 button:hover,
 input[type="submit"]:hover {
     cursor: pointer;

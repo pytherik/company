@@ -20,11 +20,32 @@ class EmployeeFile extends Employee
         }
         fclose($handle);
       } catch (Error $e) {
-        //todo style error.php
         throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
       }
     return $employees;
   }
+
+  /**
+   * @param $department
+   * @return array|null
+   * @throws Exception
+   */
+  public function getAllEmployeesByDepartment($department) :array|null
+  {
+    try{
+      $employees = (new EmployeeFile())->getAllAsObjects();
+      $empByDepartment = [];
+      foreach($employees as $employee) {
+        if($department->getId() === $employee->getDepartmentId()){
+          $empByDepartment[] = $employee;
+        }
+      }
+    } catch (Error $e) {
+      throw new Exception($e->getMessage());
+    }
+    return $empByDepartment;
+  }
+
 
   /**
    * @param int $id
