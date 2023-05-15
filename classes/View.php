@@ -16,7 +16,7 @@ class View
   /**
    * @param string $action
    */
-  public function setAction(string $action): void
+  public function setNavigation(string $action): void
   {
     $this->action = $action;
   }

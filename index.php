@@ -10,13 +10,14 @@ spl_autoload_register(function ($class) {
 $EmployeeClass = (PERSISTENCY === 'file') ? 'EmployeeFile' : 'EmployeeDb';
 $DepartmentClass = (PERSISTENCY === 'file') ? 'DepartmentFile' : 'DepartmentDb';
 
+//info Klasse View übernimmt heading, title und Navigationsinformationen
 $view = new View();
 
 $action = $_REQUEST['action'] ?? 'showList';
 $area = $_REQUEST['area'] ?? 'employee';
 $id = $_REQUEST['id'] ?? '';
 
-// Variablenübergabe
+//info Variablenübergabe
 $departmentName = $_POST['departmentName'] ?? '';
 $firstName = $_POST['firstName'] ?? '';
 $lastName = $_POST['lastName'] ?? '';
@@ -33,13 +34,13 @@ try {
           $departments = (new $DepartmentClass())->getAllAsObjects();
           $view->setHeading('Alle Abteilungen');
       }
-      $view->setAction($action);
+      $view->setNavigation($action);
       break;
     case 'showAllEmployees':
       $department = (new $DepartmentClass())->getObjectById($id);
       $department->buildEmployees();
       $employees = $department->getEmployees();
-      $view->setAction('showList');
+      $view->setNavigation('showList');
       $abteilung = $department->getName();
       $view->setHeading("Mitarbeiter $abteilung");
       break;
@@ -52,7 +53,7 @@ try {
           $department = (new $DepartmentClass())->getObjectById($id);
           $view->setHeading('Abteilung bearbeiten');
       }
-      $view->setAction('showUpdateAndCreate');
+      $view->setNavigation('showUpdateAndCreate');
       break;
     case 'showCreate':
       if ($area === 'employee') {
@@ -61,7 +62,7 @@ try {
       } else {
         $view->setHeading('Neue Abteilung');
       }
-      $view->setAction('showUpdateAndCreate');
+      $view->setNavigation('showUpdateAndCreate');
       break;
     case 'delete':
       if ($area === 'employee') {
@@ -73,7 +74,7 @@ try {
           $departments = (new $DepartmentClass())->getAllAsObjects();
           $view->setHeading('Alle Abteilungen');
         }
-      $view->setAction('showList');
+      $view->setNavigation('showList');
       break;
     case 'update':
       if ($area === 'employee') {
@@ -87,7 +88,7 @@ try {
           $departments = (new $DepartmentClass())->getAllAsObjects();
           $view->setHeading('Alle Abteilungen');
       }
-      $view->setAction('showList');
+      $view->setNavigation('showList');
       break;
     case 'create':
       if ($area === 'employee') {
@@ -106,11 +107,11 @@ try {
           $departments = (new $DepartmentClass())->getAllAsObjects();
           $view->setHeading('Alle Abteilungen');
       }
-      $view->setAction('showList');
+      $view->setNavigation('showList');
       break;
   }
 } catch (Exception $e) {
-  $view->setAction('error');
+  $view->setNavigation('error');
   $view->setHeading('WTF 😨 ?!');
   $area = '';
 }

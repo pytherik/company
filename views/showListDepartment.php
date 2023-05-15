@@ -19,7 +19,7 @@
       <div class="cell">Abteilung</div>
       <div class="cell center">Löschen</div>
       <div class="cell center">Ändern</div>
-      <div class="cell">Liste MA</div>
+      <div class="cell center">Liste MA</div>
     </div>
     <?php
     foreach ($departments as $dep) { ?>
