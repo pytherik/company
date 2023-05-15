@@ -105,11 +105,17 @@ class EmployeeDb extends Employee
       $stmt->bindParam('departmentId', $departmentId, PDO::PARAM_INT);
       $stmt->execute();
       $id = $dbh->lastInsertId();
+      $employee = new EmployeeDb($id, $firstName, $lastName, $departmentId);
+      //info In Programmiersprachen, bei denen alle Objekte im RAM sind:
+      // um sicherzugehen, dass der employee auch direkt einem pepartment zugewiesen
+      // wird, können wir hier eine Methode aufrufen. Dies hat den Nachteil, dass wir die
+      // Klasse EmployeeDb nie ohne die Klasse Department Db benutzen können.
+      // Dies ist eine im Allgemeinen ungewollte Abhängigkeit.
       $dbh = null;
     } catch (PDOException $e) {
       throw new Exception($e->getMessage());
     }
-    return new EmployeeDb($id, $firstName, $lastName, $departmentId);
+    return $employee;
   }
 
   /**

@@ -15,6 +15,10 @@ class DepartmentDb extends Department
     return $this->employees;
   }
 
+  /**
+   * @return void
+   * @throws Exception
+   */
   public function buildEmployees(): void
   {
     $this->employees = (new EmployeeDb())->getAllEmployeesByDepartment($this);
@@ -23,15 +27,23 @@ class DepartmentDb extends Department
   /**
    * @param int $id
    * @return DepartmentDb
+   * @throws Exception
    */
   public function getObjectById(int $id): DepartmentDb
   {
+    try {
     $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
     $sql = "SELECT * FROM department WHERE id = :id";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam('id', $id, PDO::PARAM_INT);
     $stmt->execute();
-    return $stmt->fetchObject(__CLASS__);
+    //info $employees füllen
+    $department = $stmt->fetchObject(__CLASS__);
+    $department->buildEmployees();
+    } catch (PDOException $e) {
+      throw new Exception('Datenbank sagt nein: '. $e->getMessage());
+    }
+    return $department;
   }
 
   /**
@@ -45,6 +57,7 @@ class DepartmentDb extends Department
       $stmt = $dbh->query($sql);
       $departments = [];
       while ($dep = $stmt->fetchObject(__CLASS__)) {
+        $dep->buildEmployees();
         $departments[] = $dep;
       }
       $dbh = null;
