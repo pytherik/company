@@ -37,7 +37,6 @@ try {
       break;
     case 'showAllEmployees':
       $department = (new $DepartmentClass())->getObjectById($id);
-      $department->buildEmployees();
       $employees = $department->getEmployees();
       $view->setAction('showList');
       $abteilung = $department->getName();
