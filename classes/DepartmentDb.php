@@ -15,6 +15,10 @@ class DepartmentDb extends Department
     return $this->employees;
   }
 
+  /**
+   * @return void
+   * @throws Exception
+   */
   public function buildEmployees(): void
   {
     $this->employees = (new EmployeeDb())->getAllEmployeesByDepartment($this);
