@@ -15,7 +15,7 @@ class EmployeeDb extends Employee
   public function getAllAsObjects(DepartmentDb $department = null): array|null
   {
     try {
-      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $dbh = Db::connect();
       if (!isset($department)) {
         $sql = 'SELECT * from employee';
         $result = $dbh->query($sql);
@@ -31,7 +31,6 @@ class EmployeeDb extends Employee
         while ($row = $result->fetchObject(__CLASS__)) {
           $employees[] = $row;
         }
-      $dbh = null;
     } catch (PDOException $e) {
       throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
     }
@@ -56,7 +55,7 @@ class EmployeeDb extends Employee
   public function getObjectById(int $id): EmployeeDb|false
   {
     try {
-      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $dbh = Db::connect();
       //info Version bisher
       /*
        * $sql = "SELECT * from employee WHERE id = :id";
@@ -80,7 +79,6 @@ class EmployeeDb extends Employee
       //info die zurückgegebenen Daten werden ausgelesen
       $employee = $stmt->fetchObject(__CLASS__);
 
-      $dbh = null;
     } catch (PDOException $e) {
       throw new Exception($e->getMessage() . ' ' . implode('-', $e->getTrace()) . ' ' . $e->getCode() . ' ' . $e->getLine());
     }
@@ -97,7 +95,7 @@ class EmployeeDb extends Employee
   public function createNewObject(string $firstName, string $lastName, int $departmentId): EmployeeDb
   {
     try {
-      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $dbh = Db::connect();
       $sql = "INSERT INTO employee (id, firstName, lastName, departmentId) VALUES (NULL, :firstName, :lastName, :departmentId)";
       $stmt = $dbh->prepare($sql);
       $stmt->bindParam('firstName', $firstName);
@@ -111,7 +109,6 @@ class EmployeeDb extends Employee
       // wird, können wir hier eine Methode aufrufen. Dies hat den Nachteil, dass wir die
       // Klasse EmployeeDb nie ohne die Klasse Department Db benutzen können.
       // Dies ist eine im Allgemeinen ungewollte Abhängigkeit.
-      $dbh = null;
     } catch (PDOException $e) {
       throw new Exception($e->getMessage());
     }
@@ -125,7 +122,7 @@ class EmployeeDb extends Employee
   public function updateObject(): void
   {
     try {
-      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $dbh = Db::connect();
       $sql = "UPDATE employee SET 
                     firstName = :firstName,
                     lastName = :lastName, 
@@ -137,7 +134,6 @@ class EmployeeDb extends Employee
       $stmt->bindParam('departmentId', $this->departmentId, PDO::PARAM_INT);
       $stmt->bindParam('id', $this->id, PDO::PARAM_INT);
       $stmt->execute();
-      $dbh = null;
     } catch (PDOException $e) {
       throw new Exception($e->getMessage());
     }
@@ -151,12 +147,11 @@ class EmployeeDb extends Employee
   public function delete(int $id): void
   {
     try {
-      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $dbh = Db::connect();
       $sql = "DELETE FROM employee WHERE id = :id";
       $stmt = $dbh->prepare($sql);
       $stmt->bindParam('id', $id, PDO::PARAM_INT);
       $stmt->execute();
-      $dbh = null;
     } catch (PDOException $e) {
       throw new Exception($e->getMessage());
     }

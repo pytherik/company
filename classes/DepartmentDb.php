@@ -32,16 +32,16 @@ class DepartmentDb extends Department
   public function getObjectById(int $id): DepartmentDb
   {
     try {
-    $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
-    $sql = "SELECT * FROM department WHERE id = :id";
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindParam('id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-    //info $employees füllen
-    $department = $stmt->fetchObject(__CLASS__);
-    $department->buildEmployees();
+      $dbh = Db::connect();
+      $sql = "SELECT * FROM department WHERE id = :id";
+      $stmt = $dbh->prepare($sql);
+      $stmt->bindParam('id', $id, PDO::PARAM_INT);
+      $stmt->execute();
+      //info $employees füllen
+      $department = $stmt->fetchObject(__CLASS__);
+      $department->buildEmployees();
     } catch (PDOException $e) {
-      throw new Exception('Datenbank sagt nein: '. $e->getMessage());
+      throw new Exception('Datenbank sagt nein: ' . $e->getMessage());
     }
     return $department;
   }
@@ -52,7 +52,7 @@ class DepartmentDb extends Department
   public function getAllAsObjects(): array|null
   {
     try {
-      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $dbh = Db::connect();
       $sql = "SELECT * FROM department";
       $stmt = $dbh->query($sql);
       $departments = [];
@@ -60,7 +60,6 @@ class DepartmentDb extends Department
         $dep->buildEmployees();
         $departments[] = $dep;
       }
-      $dbh = null;
     } catch (PDOException $e) {
       throw new PDOException('Datenbank sagt nein: ' . $e->getMessage());
     }
@@ -73,7 +72,7 @@ class DepartmentDb extends Department
    */
   public function createNewObject(string $name): DepartmentDb
   {
-    $dbh = new PDO (DB_DSN, DB_USER, DB_PASSWD);
+    $dbh = Db::connect();
     $sql = "INSERT INTO department (id, name) VALUES (NULL, :name)";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam('name', $name);
@@ -112,7 +111,7 @@ class DepartmentDb extends Department
     $employeesLeft = (new EmployeeDb())->getAllEmployeesByDepartment((new DepartmentDb())->getObjectById($id));
     if (count($employeesLeft) === 0) {
       try {
-        $dbh = new PDO (DB_DSN, DB_USER, DB_PASSWD);
+        $dbh = Db::connect();
         $sql = "DELETE FROM department WHERE id = :id";
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
@@ -130,13 +129,12 @@ class DepartmentDb extends Department
   public function updateObject(): void
   {
     try {
-      $dbh = new PDO(DB_DSN, DB_USER, DB_PASSWD);
+      $dbh = Db::connect();
       $sql = "UPDATE department SET name = :name WHERE id = :id";
       $stmt = $dbh->prepare($sql);
       $stmt->bindParam('name', $this->name);
       $stmt->bindParam('id', $this->id);
       $stmt->execute();
-      $dbh = null;
     } catch (PDOException $e) {
       throw new Exception($e->getMessage());
     }
